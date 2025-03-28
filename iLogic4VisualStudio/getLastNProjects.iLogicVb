@@ -4,3 +4,5 @@ Dim sheetName As String = "Sheet1"
 
 'Find last 5 projects
 MultiValue.List("Project") = GoExcel.CellValues(excelPath, sheetName, "A2", "A6")
+
+MessageBox.Show("New projects updated!", "Success")
