@@ -18,12 +18,12 @@ Namespace iLogic4VisualStudio
             Dim sheetName As String = "Query1"
 
             'Assembly level params
-            Dim Project As String
+            Dim lastProject As String
             Dim length As Double
             Dim width As Double
 
-            Project = GoExcel.CellValue(excelPath, sheetName, "A2")
-            GoExcel.FindRow(excelPath, sheetName, "Name", "=", Project)
+            lastProject = GoExcel.CellValue(excelPath, sheetName, "A2")
+            GoExcel.FindRow(excelPath, sheetName, "Name", "=", lastProject)
             length = GoExcel.CurrentRowValue("Length")
             width = GoExcel.CurrentRowValue("Width")
             Parameter("LeftConectionDistance") = length
