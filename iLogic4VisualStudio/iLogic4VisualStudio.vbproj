@@ -123,8 +123,9 @@
     </Compile>
     <Compile Include="SampleRule.vb" />
     <Compile Include="RuleBase.vb" />
+    <None Include="setValuesFromExcelRow.iLogicVb" />
     <Compile Include="Table-Rule.vb" />
-    <Compile Include="Table_Excel_Rule.vb" />
+    <Compile Include="MyTestRule.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

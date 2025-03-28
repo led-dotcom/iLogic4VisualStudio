@@ -8,7 +8,7 @@ Imports Autodesk.iLogic.Types
 Imports Inventor
 
 Namespace iLogic4VisualStudio
-    Public Class Table_Excel_Rule
+    Public Class MyTestRule
         Inherits RuleBase
 
         Public Overrides _
