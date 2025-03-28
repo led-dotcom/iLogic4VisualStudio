@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="SampleRule.vb" />
     <Compile Include="RuleBase.vb" />
+    <Compile Include="Table-Rule.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

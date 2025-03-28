@@ -12,7 +12,7 @@ Sub Main()
     Dim dllFileName = "iLogic4VisualStudio.dll"
 
     'Name of the class with rule to debug
-    Dim ruleName = "iLogic4VisualStudio.SampleRule"
+    Dim ruleName = "Table_Rule"
 
     Dim testedRule As Object = GetTestedRule(buildDir, dllFileName, ruleName)
     If testedRule Is Nothing Then Return
