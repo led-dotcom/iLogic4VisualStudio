@@ -17,6 +17,10 @@ Namespace iLogic4VisualStudio
             Dim excelPath As String = "Table.xlsx"
             Dim sheetName As String = "Query1"
 
+            'Find last 5 projects
+            Dim projects As ArrayList
+            projects = GoExcel.CellValues(excelPath, sheetName, "A2", "A6")
+
             'Assembly level params
             Dim lastProject As String
             Dim length As Double
