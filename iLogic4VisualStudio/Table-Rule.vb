@@ -13,7 +13,17 @@ Namespace iLogic4VisualStudio
 
         Public Overrides _
         Sub Main()
-            MsgBox("Hello from Table Rule")
+            'Assembly level params
+            Parameter("LeftConectionDistance") = 0
+            Parameter("RightConectionDistance") = 0
+
+            '''Part level
+            '''Leg params
+            Parameter("leg:1", "LegDiameter") = 2
+            Parameter("leg:1", "LegHeight") = 20
+
+            'Renew the table immediately
+            iLogicVb.UpdateWhenDone = True
         End Sub
     End Class
 End Namespace
