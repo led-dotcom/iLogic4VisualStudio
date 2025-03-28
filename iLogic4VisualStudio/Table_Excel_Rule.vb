@@ -14,8 +14,8 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             'Path to the Excel file
-            Dim excelPath As String = "Parts.xlsx"
-            Dim sheetName As String = "Sheet1"
+            Dim excelPath As String = "Part.xlsx"
+            Dim sheetName As String = "Query1"
 
             'Assembly level params
             Dim Project As String
@@ -23,7 +23,7 @@ Namespace iLogic4VisualStudio
             Dim width As Double
 
             Project = GoExcel.CellValue(excelPath, sheetName, "A2")
-            GoExcel.FindRow(excelPath, sheetName, "Project", "=", Project)
+            GoExcel.FindRow(excelPath, sheetName, "Name", "=", Project)
             length = GoExcel.CurrentRowValue("Length")
             width = GoExcel.CurrentRowValue("Width")
             Parameter("LeftConectionDistance") = length
