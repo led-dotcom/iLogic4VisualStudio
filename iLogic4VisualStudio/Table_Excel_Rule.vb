@@ -14,7 +14,7 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             'Path to the Excel file
-            Dim excelPath As String = "Part.xlsx"
+            Dim excelPath As String = "Table.xlsx"
             Dim sheetName As String = "Query1"
 
             'Assembly level params
