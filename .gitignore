@@ -345,3 +345,5 @@ OldVersions/
 *.lck
 
 ! Vyvoj/Release/
+/iLogic4VisualStudio/VS/DebuggerRule.iLogicVb
+iLogic4VisualStudio/iLogic4VisualStudio.vbproj

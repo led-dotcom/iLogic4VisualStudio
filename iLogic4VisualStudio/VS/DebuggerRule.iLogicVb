@@ -6,13 +6,13 @@ Imports File = System.IO.File
 Imports Path = System.IO.Path
 Sub Main()
     ' Path to directory with build
-    Dim buildDir = "C:\Users\led\source\repos\iLogic4VisualStudio\iLogic4VisualStudio\bin\Debug"
+    Dim buildDir = "D:\Repos\iLogic4VisualStudio\bin\Debug"
 
     ' File name of compiled DLL file
     Dim dllFileName = "iLogic4VisualStudio.dll"
 
     'Name of the class with rule to debug
-    Dim ruleName = "Table_Excel_Rule"
+    Dim ruleName = "SampleRule"
 
     Dim testedRule As Object = GetTestedRule(buildDir, dllFileName, ruleName)
     If testedRule Is Nothing Then Return
