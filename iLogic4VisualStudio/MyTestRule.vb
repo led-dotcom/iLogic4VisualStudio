@@ -17,17 +17,13 @@ Namespace iLogic4VisualStudio
             Dim excelPath As String = "Table.xlsx"
             Dim sheetName As String = "Query1"
 
-            'Find last 5 projects
-            Dim projects As ArrayList
-            projects = GoExcel.CellValues(excelPath, sheetName, "A2", "A6")
-
             'Assembly level params
-            Dim lastProject As String
+            Dim choosedProject As String
             Dim length As Double
             Dim width As Double
 
-            lastProject = GoExcel.CellValue(excelPath, sheetName, "A2")
-            GoExcel.FindRow(excelPath, sheetName, "Name", "=", lastProject)
+            choosedProject = Parameter("Project")
+            GoExcel.FindRow(excelPath, sheetName, "Name", "=", choosedProject)
             length = GoExcel.CurrentRowValue("Length")
             width = GoExcel.CurrentRowValue("Width")
             Parameter("LeftConectionDistance") = length
