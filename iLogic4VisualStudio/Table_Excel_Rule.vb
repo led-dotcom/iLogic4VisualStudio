@@ -14,17 +14,16 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             'Path to the Excel file
-            Dim AbsoluteExcelPath As String = "C:\Users\led\Documents\Inventor\exercise\Parts.xlsx"
-            Dim RelativeExcelPath As String = "Parts.xlsx"
+            Dim excelPath As String = "Parts.xlsx"
             Dim sheetName As String = "Sheet1"
 
+            'Assembly level params
             Dim Project As String
-
             Dim length As Double
             Dim width As Double
 
-            Project = GoExcel.CellValue(AbsoluteExcelPath, sheetName, "A2")
-            GoExcel.FindRow(AbsoluteExcelPath, sheetName, "Project", "=", Project)
+            Project = GoExcel.CellValue(excelPath, sheetName, "A2")
+            GoExcel.FindRow(excelPath, sheetName, "Project", "=", Project)
             length = GoExcel.CurrentRowValue("Length")
             width = GoExcel.CurrentRowValue("Width")
             Parameter("LeftConectionDistance") = length
