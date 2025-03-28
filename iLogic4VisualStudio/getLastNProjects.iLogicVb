@@ -1,0 +1,6 @@
+﻿'Path to the Excel file
+Dim excelPath As String = "Table.xlsx"
+Dim sheetName As String = "Query1"
+
+'Find last 5 projects
+MultiValue.List("Project") = GoExcel.CellValues(excelPath, sheetName, "A2", "A6")
