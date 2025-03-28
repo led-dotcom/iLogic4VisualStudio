@@ -6,7 +6,7 @@ Imports File = System.IO.File
 Imports Path = System.IO.Path
 Sub Main()
     ' Path to directory with build
-    Dim buildDir = "D:\GIT\iLogicForVS\iLogicForVS\bin\Debug"
+    Dim buildDir = "C:\Users\led\source\repos\iLogic4VisualStudio\iLogic4VisualStudio\bin\Debug"
 
     ' File name of compiled DLL file
     Dim dllFileName = "iLogic4VisualStudio.dll"
