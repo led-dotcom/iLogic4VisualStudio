@@ -16,7 +16,7 @@ Public Class SampleRule
         Sub Main()
         'Main iLogic code
         If (ThisDoc.Document.FileSaveCounter > 0) Then
-            MsgBox(ThisDoc.FileName(False))
+            MsgBox(ThisDoc.FileName(True))
         Else
             MsgBox("File is not saved")
         End If
