@@ -15,20 +15,30 @@ Namespace iLogic4VisualStudio
         Sub Main()
             Dim oDoc As DrawingDocument = ThisDoc.Document
 
-            Dim oSheet As Sheet = oDoc.ActiveSheet
-            Dim oNote As DrawingNote
-            oNote = oSheet.DrawingNotes.Item(1)
+            'Dim oSheetOnly As Sheet = oDoc.ActiveSheet
+            'Dim oNote As DrawingNote
+            'oNote = oSheetOnly.DrawingNotes.Item(1)
 
-            Dim oText As String
-            oText = oNote.Text
+            'Dim oText As String = oNote.Text
 
-            Logger.Info(oText)
-
+            'Logger.Info(oText)
 
 
 
-            'Dim oSheets As Sheets
-            'oSheets = oDoc.Sheets
+
+            Dim oSheets As Sheets = oDoc.Sheets
+
+            For Each oSheet As Sheet In oSheets
+                Dim iNote As DrawingNote
+                For Each iNote In oSheet.DrawingNotes
+                    Logger.Info(iNote.Text)
+
+                Next
+
+
+            Next
+
+
 
             'Dim oSheet1 As Sheet
             'oSheet1 = oSheets.Item(2)
