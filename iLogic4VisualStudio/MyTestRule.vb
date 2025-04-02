@@ -13,31 +13,54 @@ Namespace iLogic4VisualStudio
 
         Public Overrides _
         Sub Main()
-            'Path to the Excel file
-            Dim excelPath As String = "Query.xlsx"
-            Dim sheetName As String = "Sheet1"
+            Dim oDoc As DrawingDocument = ThisDoc.Document
 
-            'Assembly level params
-            Dim choosedProject As String
+            Dim oSheet As Sheet = oDoc.ActiveSheet
+            Dim oNote As DrawingNote
+            oNote = oSheet.DrawingNotes.Item(1)
 
-            'Part level params
-            Dim rack_width As Double
-            Dim leg_height As Double
+            Dim oText As String
+            oText = oNote.Text
 
-            choosedProject = Parameter("Project")
-            GoExcel.FindRow(excelPath, sheetName, "Project", "=", choosedProject)
-            rack_width = GoExcel.CurrentRowValue("Rack Width")
-            leg_height = GoExcel.CurrentRowValue("Leg height")
-            Parameter("Undershelf - Copy:1", "Rack_Width") = rack_width
-            Parameter("TUBE - Copy:1", "Leg_height") = leg_height
+            Logger.Info(oText)
 
-            '''Assembly level params, read only now
-            '''needs to update, be actual part params which showed in the form
-            Parameter("Rack_Width") = rack_width
-            Parameter("Leg_height") = leg_height
 
-            'Renew the table immediately
-            iLogicVb.UpdateWhenDone = True
+
+
+            'Dim oSheets As Sheets
+            'oSheets = oDoc.Sheets
+
+            'Dim oSheet1 As Sheet
+            'oSheet1 = oSheets.Item(2)
+
+            'Dim oNote1 As DrawingNote
+            'oNote1 = oSheet1.DrawingNotes.Item(0)
+
+
+            'Dim oModel As Document
+            'oModel = ThisDoc.ModelDocument
+
+            'Dim Result As DialogResult = MessageBox.Show("Turn all sketch symbol leaders on?", "Sketch symbol leaders toggle", MessageBoxButtons.YesNoCancel)
+            'Dim viewlabelresult As Boolean = False`
+            'If Result = DialogResult.Yes Then
+            '    viewlabelresult = True
+            'ElseIf Result = DialogResult.Cancel Then
+            '    viewlabelresult = False
+            'Else
+            '    Exit Sub
+            'End If
+
+
+
+            'Dim oSketchedSymbol As SketchedSymbol
+            'oSheets = oDoc.Sheets
+            'oSheet = oSheets.Item(1)
+            'For Each oSheet In oSheets
+            '    For Each oSketchedSymbol In oSheet.SketchedSymbols
+            '        oSketchedSymbol.LeaderVisible = True
+
+            '    Next
+            'Next
         End Sub
     End Class
 End Namespace
