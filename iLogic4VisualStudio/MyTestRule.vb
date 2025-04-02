@@ -27,6 +27,17 @@ Namespace iLogic4VisualStudio
                 For Each iNote As DrawingNote In oSheet.DrawingNotes
                     Logger.Info(i & ", " & j & "," & iNote.Text)
 
+                    ''' Search for the text "GSS"
+                    ''' in the note text
+                    Dim iText As String = iNote.Text
+                    Dim search As String = "GSS"
+
+                    If iText.Contains(search) Then
+                        Dim oText As String = Replace(iText, search, search & "!!!!")
+
+                        iNote.FormattedText = oText
+                    End If
+
                     j += 1
                 Next
 
