@@ -33,10 +33,10 @@ Namespace iLogic4VisualStudio
 
             For Each oSheet As Sheet In oSheets
                 For Each iNote As DrawingNote In oSheet.DrawingNotes
-                    Logger.Info(i & ", " & j & "," & iNote.Text)
+                    Logger.Info(i & ", " & j & "," & iNote.FormattedText)
 
                     ' Search for the text "GSS" in the note text
-                    Dim iText As String = iNote.Text
+                    Dim iText As String = iNote.FormattedText
                     Dim oText As String = ""
                     Dim searchs() As String = {"20GSS", "20 GSS", "20G.S.S", "20 G.S.S", "20gss", "20 gss", "20g.s.s", "20 g.s.s"}
 
