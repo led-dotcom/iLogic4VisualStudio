@@ -13,7 +13,7 @@ Namespace iLogic4VisualStudio
 
         Public Overrides _
         Sub Main()
-            ' Reset all to #304
+            ' Reset all to #430
 
             ' Check if this file is a drawing
             If Not TypeOf (ThisApplication.ActiveDocument) Is DrawingDocument Then
@@ -22,8 +22,8 @@ Namespace iLogic4VisualStudio
             End If
 
             'Set the find and replace text
-            Dim findTXT As String = "430"
-            Dim replaceTXT As String = "304"
+            Dim findTXT As String = "304"
+            Dim replaceTXT As String = "430"
 
             Dim searchs() As String = {"20GSS", "20 GSS", "20G.S.S", "20 G.S.S", "20gss", "20 gss", "20g.s.s", "20 g.s.s"}
 
@@ -55,14 +55,15 @@ Namespace iLogic4VisualStudio
                 Next
             Next
 
-            ' Add a note to the first sheet
+            ' delete all notes with "20 G.S.S all #"
             Dim frontPage As Sheet = oSheets.Item(1)
 
-            Dim insertPoint = ThisApplication.TransientGeometry.CreatePoint2d(2, 3)
-
-            Dim frontTXT As String = "20 G.S.S all #304"
-            Dim frontNote As String = "<StyleOverride FontSize='0.6096'>" & frontTXT & "</StyleOverride>"
-            frontPage.DrawingNotes.GeneralNotes.AddFitted(insertPoint, frontNote)
+            For Each frontNote As DrawingNote In frontPage.DrawingNotes.GeneralNotes
+                Dim iText As String = frontNote.FormattedText
+                If iText.Contains("20 G.S.S all #") Then
+                    frontNote.Delete()
+                End If
+            Next
 
             MsgBox("All reset to #" & replaceTXT)
         End Sub
