@@ -15,7 +15,7 @@ Dim searchs() As String = {"20GSS", "20 GSS", "20G.S.S", "20 G.S.S", "20gss", "2
 Dim oDoc As DrawingDocument = ThisDoc.Document
 Dim oSheets As Sheets = oDoc.Sheets
 
-''' Loop through all sheets and all notes and print the note text to the logger
+''' Loop through all sheets and all notes and print the text to the logger
 For Each oSheet As Sheet In oSheets
     For Each iNote As DrawingNote In oSheet.DrawingNotes.GeneralNotes
 
@@ -38,6 +38,17 @@ For Each oSheet As Sheet In oSheets
         'Logger.Info("change?: " & oText)
         If Not String.IsNullOrEmpty(oText) Then iNote.FormattedText = oText
     Next
+Next
+
+' delete all notes with "20 G.S.S all #"
+Dim frontPage As Sheet = oSheets.Item(1)
+
+For Each frontNote As DrawingNote In frontPage.DrawingNotes.GeneralNotes
+    Dim iText As String = frontNote.FormattedText
+    If iText.Contains("20 G.S.S all #") Then
+        frontNote.Delete()
+        Exit For
+    End If
 Next
 
 MsgBox("All reset to #" & replaceTXT)
