@@ -28,7 +28,7 @@ Namespace iLogic4VisualStudio
 
             ''' Loop through all sheets and all notes and print the note text to the logger
             For Each oSheet As Sheet In oSheets
-                For Each iNote As DrawingNote In oSheet.DrawingNotes
+                For Each iNote As DrawingNote In oSheet.DrawingNotes.GeneralNotes
 
                     Dim iText As String = iNote.FormattedText
                     Dim oText As String = ""
