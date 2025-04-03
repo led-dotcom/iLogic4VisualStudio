@@ -30,7 +30,7 @@ Namespace iLogic4VisualStudio
             Dim oDoc As DrawingDocument = ThisDoc.Document
             Dim oSheets As Sheets = oDoc.Sheets
 
-            ''' Loop through all sheets and all notes and print the note text to the logger
+            ''' Loop through all sheets and all notes and print the text to the logger
             For Each oSheet As Sheet In oSheets
                 For Each iNote As DrawingNote In oSheet.DrawingNotes.GeneralNotes
 
@@ -54,6 +54,15 @@ Namespace iLogic4VisualStudio
                     If Not String.IsNullOrEmpty(oText) Then iNote.FormattedText = oText
                 Next
             Next
+
+            ' Add a note to the first sheet
+            Dim frontPage As Sheet = oSheets.Item(1)
+
+            Dim insertPoint = ThisApplication.TransientGeometry.CreatePoint2d(2, 3)
+
+            Dim frontTXT As String = "20 G.S.S all #304"
+            Dim frontNote As String = "<StyleOverride FontSize='0.6096'>" & frontTXT & "</StyleOverride>"
+            frontPage.DrawingNotes.GeneralNotes.AddFitted(insertPoint, frontNote)
 
             MsgBox("All reset to #" & replaceTXT)
         End Sub
