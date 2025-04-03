@@ -47,7 +47,6 @@ For Each frontNote As DrawingNote In frontPage.DrawingNotes.GeneralNotes
     Dim iText As String = frontNote.FormattedText
     If iText.Contains("20 G.S.S all #") Then
         frontNote.Delete()
-        Exit For
     End If
 Next
 
