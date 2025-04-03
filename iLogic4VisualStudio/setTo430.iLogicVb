@@ -1,7 +1,7 @@
 ﻿' Reset all to #430
 
 ' Check if this file is a drawing
-If TypeOf (ThisApplication.ActiveDocument) IsNot DrawingDocument Then
+If Not TypeOf (ThisApplication.ActiveDocument) Is DrawingDocument Then
     MessageBox.Show("Drawing not active!")
     Exit Sub
 End If
