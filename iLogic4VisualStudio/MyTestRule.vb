@@ -13,17 +13,17 @@ Namespace iLogic4VisualStudio
 
         Public Overrides _
         Sub Main()
-            ' Reset all to #430
+            ' Reset all to #304
 
             ' Check if this file is a drawing
-            If TypeOf (ThisApplication.ActiveDocument) IsNot DrawingDocument Then
+            If Not TypeOf (ThisApplication.ActiveDocument) Is DrawingDocument Then
                 MessageBox.Show("Drawing not active!")
                 Exit Sub
             End If
 
-            'set the find and replace text
-            Dim findTXT As String = "304"
-            Dim replaceTXT As String = "430"
+            'Set the find and replace text
+            Dim findTXT As String = "430"
+            Dim replaceTXT As String = "304"
 
             Dim searchs() As String = {"20GSS", "20 GSS", "20G.S.S", "20 G.S.S", "20gss", "20 gss", "20g.s.s", "20 g.s.s"}
 
