@@ -21,6 +21,10 @@ Namespace iLogic4VisualStudio
                 Exit Sub
             End If
 
+            'set the find and replace text
+            Dim findTXT As String = "304"
+            Dim replaceTXT As String = "430"
+
             Dim searchs() As String = {"20GSS", "20 GSS", "20G.S.S", "20 G.S.S", "20gss", "20 gss", "20g.s.s", "20 g.s.s"}
 
             Dim oDoc As DrawingDocument = ThisDoc.Document
@@ -34,14 +38,14 @@ Namespace iLogic4VisualStudio
                     Dim oText As String = ""
 
                     For Each search As String In searchs
-                        If iText.Contains(search) And iText.Contains("#304") Then
-                            oText = Replace(iText, "304", "430")
+                        If iText.Contains(search) And iText.Contains("#" & findTXT) Then
+                            oText = Replace(iText, findTXT, replaceTXT)
                             Exit For
-                        ElseIf iText.Contains(search) And iText.Contains("304") Then
-                            oText = Replace(iText, "304", "#430")
+                        ElseIf iText.Contains(search) And iText.Contains(findTXT) Then
+                            oText = Replace(iText, findTXT, "#" & replaceTXT)
                             Exit For
-                        ElseIf iText.Contains(search) And Not iText.Contains("430") Then
-                            oText = Replace(iText, search, search & " #430")
+                        ElseIf iText.Contains(search) And Not iText.Contains(replaceTXT) Then
+                            oText = Replace(iText, search, search & "#" & replaceTXT)
                             Exit For
                         End If
                     Next
@@ -51,7 +55,7 @@ Namespace iLogic4VisualStudio
                 Next
             Next
 
-            MsgBox("All reset to #430")
+            MsgBox("All reset to #" & replaceTXT)
         End Sub
     End Class
 End Namespace
