@@ -45,7 +45,7 @@ Dim frontPage As Sheet = oSheets.Item(1)
 
 For Each frontNote As DrawingNote In frontPage.DrawingNotes.GeneralNotes
     Dim iText As String = frontNote.FormattedText
-    If iText.Contains("20 G.S.S all #") Then
+    If iText.Contains("All #") Then
         frontNote.Delete()
     End If
 Next

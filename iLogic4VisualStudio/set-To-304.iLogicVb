@@ -43,10 +43,10 @@ Next
 ' Add a note to the first sheet
 Dim frontPage As Sheet = oSheets.Item(1)
 
-Dim insertPoint = ThisApplication.TransientGeometry.CreatePoint2d(2, 3)
+Dim insertPoint = ThisApplication.TransientGeometry.CreatePoint2d(3, 4)
 
-Dim frontTXT As String = "20 G.S.S all #304"
-Dim frontNote As String = "<StyleOverride FontSize='0.6096'>" & frontTXT & "</StyleOverride>"
+Dim frontTXT As String = "All #304"
+Dim frontNote As String = "<StyleOverride FontSize='1.4'>" & frontTXT & "</StyleOverride>"
 frontPage.DrawingNotes.GeneralNotes.AddFitted(insertPoint, frontNote)
 
 MsgBox("All reset to #" & replaceTXT)
