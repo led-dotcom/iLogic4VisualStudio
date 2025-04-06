@@ -1,0 +1,8 @@
+﻿'Path to the Excel file
+Dim excelPath As String = "sync.xlsx"
+Dim sheetName As String = "Projects"
+
+'Find last 10 projects
+MultiValue.List("Project") = GoExcel.CellValues(excelPath, sheetName, "A2", "A11")
+
+MessageBox.Show("New projects updated!", "Success")

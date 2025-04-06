@@ -1,0 +1,21 @@
+﻿'Path to the Excel file
+Dim excelPath As String = "sync.xlsx"
+Dim sheetName As String = "Projects"
+
+'Assembly level params
+Dim choosedProject As String
+
+choosedProject = Parameter("Project")
+GoExcel.FindRow(excelPath, sheetName, "Production Order", "=", choosedProject)
+
+'iProperties
+Dim job As String = GoExcel.CurrentRowValue("Production Order")
+Dim sales As String = GoExcel.CurrentRowValue("Salesman")
+Dim designer As String = GoExcel.CurrentRowValue("Designer")
+
+iProperties.Value("Custom", "job") = job
+iProperties.Value("Custom", "sales") = sales
+iProperties.Value("Custom", "designer") = designer
+
+'Renew the table immediately
+iLogicVb.UpdateWhenDone = True
