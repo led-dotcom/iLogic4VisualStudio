@@ -38,8 +38,6 @@ Namespace iLogic4VisualStudio
                     Dim oFormattedText As String = ""
                     Dim oText As String = ""
 
-                    Logger.Info("iFormattedText: " & iFormattedText)
-
                     If iText.Contains(searchStr) Then
                         ''' get find string in formatted text
                         Dim leftIndex As Integer = iFormattedText.IndexOf("(")
@@ -59,9 +57,9 @@ Namespace iLogic4VisualStudio
                         'Dim units As String = numsArr(1)
 
                         If isMirrorPart Then
-                            oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & qtyByUnit * iPropertyQty & ")" & " L + R"
+                            oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & "<StyleOverride Font='Cascadia Mono' FontSize='0.48' Bold='True' Underline='True'>" & qtyByUnit * iPropertyQty & "</StyleOverride>" & ")" & " L + R"
                         Else
-                            oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & qtyByUnit * iPropertyQty & ")"
+                            oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & "<StyleOverride Font='Cascadia Mono' FontSize='0.48' Bold='True' Underline='True'>" & qtyByUnit * iPropertyQty & "</StyleOverride>" & ")" & ")"
                         End If
 
                         oFormattedText = Replace(iFormattedText, findTXT, oText)
