@@ -32,10 +32,24 @@ Namespace iLogic4VisualStudio
             For Each oSheet As Sheet In oSheets
                 For Each iNote As DrawingNote In oSheet.DrawingNotes.GeneralNotes
 
-                    Dim iText As String = UCase(iNote.FormattedText)
+                    Dim iFormattedText As String = iNote.FormattedText
+                    Dim iText As String = UCase(iNote.Text)
+
+                    Dim oFormattedText As String = ""
                     Dim oText As String = ""
 
+                    Logger.Info("iFormattedText: " & iFormattedText)
+
                     If iText.Contains(searchStr) Then
+                        ''' get find string in formatted text
+                        Dim leftIndex As Integer = iFormattedText.IndexOf("(")
+                        Dim rightIndex As Integer = iFormattedText.IndexOf(")")
+
+                        Dim length As Integer = rightIndex - leftIndex + 1
+
+                        Dim findTXT As String = iFormattedText.Substring(leftIndex, length)
+
+                        ''' get qty per unit
                         Dim subStringsArr As String() = Split(iText, "=")
                         Dim isMirrorPart As String = (subStringsArr.Length = 3)
 
@@ -50,10 +64,12 @@ Namespace iLogic4VisualStudio
                             oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & qtyByUnit * iPropertyQty & ")"
                         End If
 
+                        oFormattedText = Replace(iFormattedText, findTXT, oText)
+
                     End If
 
                     'Logger.Info("change?: " & oText)
-                    If Not String.IsNullOrEmpty(oText) Then iNote.FormattedText = oText
+                    If Not String.IsNullOrEmpty(oFormattedText) Then iNote.FormattedText = oFormattedText
                 Next
             Next
 
