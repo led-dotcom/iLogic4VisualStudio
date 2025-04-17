@@ -13,7 +13,9 @@ Namespace iLogic4VisualStudio
 
         Public Overrides _
         Sub Main()
-            ' Reset all to #430
+            Dim iPropertyQty As String = "9"
+
+            ' Reset QTY as default format
 
             ' Check if this file is a drawing
             If Not TypeOf (ThisApplication.ActiveDocument) Is DrawingDocument Then
@@ -21,11 +23,7 @@ Namespace iLogic4VisualStudio
                 Exit Sub
             End If
 
-            'Set the find and replace text
-            Dim findTXT As String = "304"
-            Dim replaceTXT As String = "430"
-
-            Dim searchs() As String = {"20GSS", "20 GSS", "20G.S.S", "20 G.S.S", "20gss", "20 gss", "20g.s.s", "20 g.s.s"}
+            Dim searchStr As String = "(QTY="
 
             Dim oDoc As DrawingDocument = ThisDoc.Document
             Dim oSheets As Sheets = oDoc.Sheets
@@ -34,38 +32,32 @@ Namespace iLogic4VisualStudio
             For Each oSheet As Sheet In oSheets
                 For Each iNote As DrawingNote In oSheet.DrawingNotes.GeneralNotes
 
-                    Dim iText As String = iNote.FormattedText
+                    Dim iText As String = UCase(iNote.FormattedText)
                     Dim oText As String = ""
 
-                    For Each search As String In searchs
-                        If iText.Contains(search) And iText.Contains("#" & findTXT) Then
-                            oText = Replace(iText, findTXT, replaceTXT)
-                            Exit For
-                        ElseIf iText.Contains(search) And iText.Contains(findTXT) Then
-                            oText = Replace(iText, findTXT, "#" & replaceTXT)
-                            Exit For
-                        ElseIf iText.Contains(search) And Not iText.Contains(replaceTXT) Then
-                            oText = Replace(iText, search, search & "#" & replaceTXT)
-                            Exit For
+                    If iText.Contains(searchStr) Then
+                        Dim subStringsArr As String() = Split(iText, "=")
+                        Dim isMirrorPart As String = (subStringsArr.Length = 3)
+
+                        Dim numsArr As String() = Split(subStringsArr(1), "X")
+
+                        Dim qtyByUnit As String = numsArr(0)
+                        'Dim units As String = numsArr(1)
+
+                        If isMirrorPart Then
+                            oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & qtyByUnit * iPropertyQty & ")" & " L + R"
+                        Else
+                            oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & qtyByUnit * iPropertyQty & ")"
                         End If
-                    Next
+
+                    End If
 
                     'Logger.Info("change?: " & oText)
                     If Not String.IsNullOrEmpty(oText) Then iNote.FormattedText = oText
                 Next
             Next
 
-            ' delete all notes with "20 G.S.S all #"
-            Dim frontPage As Sheet = oSheets.Item(1)
-
-            For Each frontNote As DrawingNote In frontPage.DrawingNotes.GeneralNotes
-                Dim iText As String = frontNote.FormattedText
-                If iText.Contains("20 G.S.S all #") Then
-                    frontNote.Delete()
-                End If
-            Next
-
-            MsgBox("All reset to #" & replaceTXT)
+            MsgBox("All qty are reset")
         End Sub
     End Class
 End Namespace
