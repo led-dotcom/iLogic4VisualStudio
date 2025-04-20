@@ -1,10 +1,15 @@
-﻿Dim iPropertyQty As String = "1"
-
-' Reset QTY as default format
+﻿' Reset QTY as default format
 
 ' Check if this file is a drawing
 If Not TypeOf (ThisApplication.ActiveDocument) Is DrawingDocument Then
     MessageBox.Show("Drawing not active!")
+    Exit Sub
+End If
+
+Dim units As String = InputBox("Please provide quantity of units:", "Quantity of units", "1")
+
+' Check if the input is a number
+If String.IsNullOrEmpty(units) Then
     Exit Sub
 End If
 
@@ -42,21 +47,14 @@ For Each oSheet As Sheet In oSheets
             End If
 
             Dim qtyByUnit As String = numsArr(0)
-            'Dim units As String = numsArr(1)
 
-            If qtyByUnit = "1" And iPropertyQty = "1" Then
+            If qtyByUnit = "1" And units = "1" Then
                 oText = "(QTY=1)"
             Else
-                oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & "<StyleOverride Font='Cascadia Mono' FontSize='0.72' Bold='True' Underline='True'>" & qtyByUnit * iPropertyQty & "</StyleOverride>" & ")"
+                oText = searchStr & qtyByUnit & "X" & units & "=" & "<StyleOverride Font='Cascadia Mono' FontSize='0.72' Bold='True' Underline='True'>" & qtyByUnit * units & "</StyleOverride>" & ")"
 
                 ''' check if the note is a mirror part
-                Dim isMirrorPart As Boolean = False
-
                 If findTXT.Contains("L") And findTXT.Contains("R") Then
-                    isMirrorPart = True
-                End If
-
-                If isMirrorPart Then
                     oText &= " L + R"
                 End If
             End If
@@ -70,4 +68,23 @@ For Each oSheet As Sheet In oSheets
     Next
 Next
 
-MsgBox("All qty are reset")
+Dim frontPage As Sheet = oSheets.Item(1)
+
+' delete all notes with "20 G.S.S all #"
+For Each frontNote As DrawingNote In frontPage.DrawingNotes.GeneralNotes
+    Dim iFrontText As String = frontNote.FormattedText
+    If iFrontText.Contains("qty x ") Then
+        frontNote.Delete()
+    End If
+Next
+
+' Add a qty note to the first sheet
+If units <> "1" Then
+    Dim insertPoint = ThisApplication.TransientGeometry.CreatePoint2d(13, 26)
+
+    Dim frontTXT As String = "qty x " & units
+    Dim frontNote As String = "<StyleOverride FontSize='1.4'>" & frontTXT & "</StyleOverride>"
+    frontPage.DrawingNotes.GeneralNotes.AddFitted(insertPoint, frontNote)
+End If
+
+'MsgBox("All qty are reset")
