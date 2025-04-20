@@ -36,7 +36,7 @@ Namespace iLogic4VisualStudio
                     Dim iText As String = UCase(iNote.Text)
 
                     Dim oFormattedText As String = ""
-                    Dim oText As String = ""
+                    Dim oText As String
 
                     ''' check if the note is a QTY note
                     If iText.Contains(searchStr) Then
@@ -48,7 +48,13 @@ Namespace iLogic4VisualStudio
 
                         ''' get the detailed QTY values
                         Dim subStringsArr As String() = Split(iText, "=")
-                        Dim numsArr As String() = Split(subStringsArr(1), "X")
+                        Dim numsArr As String()
+
+                        If subStringsArr(1).Contains("X") Then
+                            numsArr = Split(subStringsArr(1), "X")
+                        Else
+                            numsArr = {"1"}
+                        End If
 
                         Dim qtyByUnit As String = numsArr(0)
                         'Dim units As String = numsArr(1)
