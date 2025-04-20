@@ -56,10 +56,10 @@ Namespace iLogic4VisualStudio
                         Dim qtyByUnit As String = numsArr(0)
                         'Dim units As String = numsArr(1)
 
+                        oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & "<StyleOverride Font='Cascadia Mono' FontSize='0.48' Bold='True' Underline='True'>" & qtyByUnit * iPropertyQty & "</StyleOverride>" & ")"
+
                         If isMirrorPart Then
-                            oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & "<StyleOverride Font='Cascadia Mono' FontSize='0.48' Bold='True' Underline='True'>" & qtyByUnit * iPropertyQty & "</StyleOverride>" & ")" & " L + R"
-                        Else
-                            oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & "<StyleOverride Font='Cascadia Mono' FontSize='0.48' Bold='True' Underline='True'>" & qtyByUnit * iPropertyQty & "</StyleOverride>" & ")" & ")"
+                            oText &= " L + R"
                         End If
 
                         oFormattedText = Replace(iFormattedText, findTXT, oText)
