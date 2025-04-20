@@ -13,7 +13,7 @@ Namespace iLogic4VisualStudio
 
         Public Overrides _
         Sub Main()
-            Dim iPropertyQty As String = "1"
+            Dim units As String = InputBox("Please provide quantity of units:", "Quantity of units", "1")
 
             ' Reset QTY as default format
 
@@ -59,10 +59,10 @@ Namespace iLogic4VisualStudio
                         Dim qtyByUnit As String = numsArr(0)
                         'Dim units As String = numsArr(1)
 
-                        If qtyByUnit = "1" And iPropertyQty = "1" Then
+                        If qtyByUnit = "1" And units = "1" Then
                             oText = "(QTY=1)"
                         Else
-                            oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & "<StyleOverride Font='Cascadia Mono' FontSize='0.72' Bold='True' Underline='True'>" & qtyByUnit * iPropertyQty & "</StyleOverride>" & ")"
+                            oText = searchStr & qtyByUnit & "X" & units & "=" & "<StyleOverride Font='Cascadia Mono' FontSize='0.72' Bold='True' Underline='True'>" & qtyByUnit * units & "</StyleOverride>" & ")"
 
                             ''' check if the note is a mirror part
                             Dim isMirrorPart As Boolean = False
