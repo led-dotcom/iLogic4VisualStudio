@@ -13,13 +13,18 @@ Namespace iLogic4VisualStudio
 
         Public Overrides _
         Sub Main()
-            Dim units As String = InputBox("Please provide quantity of units:", "Quantity of units", "1")
-
             ' Reset QTY as default format
 
             ' Check if this file is a drawing
             If Not TypeOf (ThisApplication.ActiveDocument) Is DrawingDocument Then
                 MessageBox.Show("Drawing not active!")
+                Exit Sub
+            End If
+
+            Dim units As String = InputBox("Please provide quantity of units:", "Quantity of units", "1")
+
+            ' Check if the input is a number
+            If String.IsNullOrEmpty(units) Then
                 Exit Sub
             End If
 
@@ -85,7 +90,7 @@ Namespace iLogic4VisualStudio
                 Next
             Next
 
-            MsgBox("All qty are reset")
+            'MsgBox("All qty are reset")
         End Sub
     End Class
 End Namespace
