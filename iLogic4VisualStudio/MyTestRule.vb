@@ -43,16 +43,19 @@ Namespace iLogic4VisualStudio
                         Dim leftIndex As Integer = iFormattedText.IndexOf("(")
                         Dim rightIndex As Integer = iFormattedText.IndexOf(")")
 
-                        Dim length As Integer = rightIndex - leftIndex + 1
+                        Dim findTXT As String = iFormattedText.Substring(leftIndex, rightIndex - leftIndex + 1)
 
-                        Dim findTXT As String = iFormattedText.Substring(leftIndex, length)
+                        ''' check if the note is a mirror part
+                        Dim isMirrorPart As Boolean = False
 
-                        ''' get qty per unit
+                        If findTXT.Contains("L") And findTXT.Contains("R") Then
+                            isMirrorPart = True
+                        End If
+
                         Dim subStringsArr As String() = Split(iText, "=")
-                        Dim isMirrorPart As Boolean = (subStringsArr.Length = 3)
-
                         Dim numsArr As String() = Split(subStringsArr(1), "X")
 
+                        ''' get qty per unit
                         Dim qtyByUnit As String = numsArr(0)
                         'Dim units As String = numsArr(1)
 
