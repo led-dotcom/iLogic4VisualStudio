@@ -49,7 +49,7 @@ Namespace iLogic4VisualStudio
 
                         ''' get qty per unit
                         Dim subStringsArr As String() = Split(iText, "=")
-                        Dim isMirrorPart As String = (subStringsArr.Length = 3)
+                        Dim isMirrorPart As Boolean = (subStringsArr.Length = 3)
 
                         Dim numsArr As String() = Split(subStringsArr(1), "X")
 
