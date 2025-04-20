@@ -1,4 +1,4 @@
-﻿Dim iPropertyQty As String = "9"
+﻿Dim iPropertyQty As String = "1"
 
 ' Reset QTY as default format
 
@@ -21,32 +21,44 @@ For Each oSheet As Sheet In oSheets
         Dim iText As String = UCase(iNote.Text)
 
         Dim oFormattedText As String = ""
-        Dim oText As String = ""
+        Dim oText As String
 
-        Logger.Info("iFormattedText: " & iFormattedText)
-
+        ''' check if the note is a QTY note
         If iText.Contains(searchStr) Then
             ''' get find string in formatted text
             Dim leftIndex As Integer = iFormattedText.IndexOf("(")
             Dim rightIndex As Integer = iFormattedText.IndexOf(")")
 
-            Dim length As Integer = rightIndex - leftIndex + 1
+            Dim findTXT As String = iFormattedText.Substring(leftIndex, rightIndex - leftIndex + 1)
 
-            Dim findTXT As String = iFormattedText.Substring(leftIndex, length)
-
-            ''' get qty per unit
+            ''' get the detailed QTY values
             Dim subStringsArr As String() = Split(iText, "=")
-            Dim isMirrorPart As String = (subStringsArr.Length = 3)
+            Dim numsArr As String()
 
-            Dim numsArr As String() = Split(subStringsArr(1), "X")
+            If subStringsArr(1).Contains("X") Then
+                numsArr = Split(subStringsArr(1), "X")
+            Else
+                numsArr = {"1"}
+            End If
 
             Dim qtyByUnit As String = numsArr(0)
             'Dim units As String = numsArr(1)
 
-            If isMirrorPart Then
-                oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & qtyByUnit * iPropertyQty & ")" & " L + R"
+            If qtyByUnit = "1" And iPropertyQty = "1" Then
+                oText = "(QTY=1)"
             Else
-                oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & qtyByUnit * iPropertyQty & ")"
+                oText = searchStr & qtyByUnit & "X" & iPropertyQty & "=" & "<StyleOverride Font='Cascadia Mono' FontSize='0.72' Bold='True' Underline='True'>" & qtyByUnit * iPropertyQty & "</StyleOverride>" & ")"
+
+                ''' check if the note is a mirror part
+                Dim isMirrorPart As Boolean = False
+
+                If findTXT.Contains("L") And findTXT.Contains("R") Then
+                    isMirrorPart = True
+                End If
+
+                If isMirrorPart Then
+                    oText &= " L + R"
+                End If
             End If
 
             oFormattedText = Replace(iFormattedText, findTXT, oText)
