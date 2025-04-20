@@ -62,7 +62,6 @@ Namespace iLogic4VisualStudio
                         End If
 
                         Dim qtyByUnit As String = numsArr(0)
-                        'Dim units As String = numsArr(1)
 
                         If qtyByUnit = "1" And units = "1" Then
                             oText = "(QTY=1)"
@@ -70,13 +69,7 @@ Namespace iLogic4VisualStudio
                             oText = searchStr & qtyByUnit & "X" & units & "=" & "<StyleOverride Font='Cascadia Mono' FontSize='0.72' Bold='True' Underline='True'>" & qtyByUnit * units & "</StyleOverride>" & ")"
 
                             ''' check if the note is a mirror part
-                            Dim isMirrorPart As Boolean = False
-
                             If findTXT.Contains("L") And findTXT.Contains("R") Then
-                                isMirrorPart = True
-                            End If
-
-                            If isMirrorPart Then
                                 oText &= " L + R"
                             End If
                         End If
