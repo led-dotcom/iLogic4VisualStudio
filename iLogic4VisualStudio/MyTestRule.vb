@@ -83,6 +83,25 @@ Namespace iLogic4VisualStudio
                 Next
             Next
 
+            Dim frontPage As Sheet = oSheets.Item(1)
+
+            ' delete all notes with "20 G.S.S all #"
+            For Each frontNote As DrawingNote In frontPage.DrawingNotes.GeneralNotes
+                Dim iFrontText As String = frontNote.FormattedText
+                If iFrontText.Contains("qty x ") Then
+                    frontNote.Delete()
+                End If
+            Next
+
+            ' Add a qty note to the first sheet
+            If units <> "1" Then
+                Dim insertPoint = ThisApplication.TransientGeometry.CreatePoint2d(13, 26)
+
+                Dim frontTXT As String = "qty x " & units
+                Dim frontNote As String = "<StyleOverride FontSize='1.4'>" & frontTXT & "</StyleOverride>"
+                frontPage.DrawingNotes.GeneralNotes.AddFitted(insertPoint, frontNote)
+            End If
+
             'MsgBox("All qty are reset")
         End Sub
     End Class
