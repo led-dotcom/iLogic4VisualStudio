@@ -13,96 +13,38 @@ Namespace iLogic4VisualStudio
 
         Public Overrides _
         Sub Main()
-            ' Reset QTY as default format
+            Dim m_Doc As Inventor.Document = ThisDoc.Document
+            'If m_Doc.DocumentType <> kAssemblyDocumentObject And m_Doc.DocumentType <> kPartDocumentObject Then
+            '    MessageBox.Show("File is not a model.", "iLogic")
+            '    Return 'exit rule
+            'End If
 
-            ' Check if this file is a drawing
-            If Not TypeOf (ThisApplication.ActiveDocument) Is DrawingDocument Then
-                MessageBox.Show("Drawing not active!")
-                Exit Sub
-            End If
+            Dim m_Camera As Inventor.Camera = ThisApplication.ActiveView.Camera
+            Dim m_TO As Inventor.TransientObjects = ThisApplication.TransientObjects
 
-            Dim units As String = InputBox("Please provide quantity of units:", "Quantity of units", "1")
+            Dim oFileName As String = ThisDoc.FileName(False)
+            'm_Camera.Perspective = True
 
-            ' Check if the input is a number
-            If String.IsNullOrEmpty(units) Then
-                Exit Sub
-            End If
+            m_Camera.ViewOrientationType = Inventor.ViewOrientationTypeEnum.kIsoTopLeftViewOrientation
+            m_Camera.Fit()
+            m_Camera.ApplyWithoutTransition()
 
-            Dim searchStr As String = "(QTY="
+            Dim m_CV As Inventor.View = ThisApplication.ActiveView
 
-            Dim oDoc As DrawingDocument = ThisDoc.Document
-            Dim oSheets As Sheets = oDoc.Sheets
+            m_CV.DisplayMode = Inventor.DisplayModeEnum.kShadedRendering
+            ThisApplication.DisplayOptions.Show3DIndicator = False
 
-            ''' Loop through all sheets and all notes and print the text to the logger
-            For Each oSheet As Sheet In oSheets
-                For Each iNote As DrawingNote In oSheet.DrawingNotes.GeneralNotes
+            m_CV.Update()
 
-                    Dim iFormattedText As String = iNote.FormattedText
-                    Dim iText As String = UCase(iNote.Text)
+            ' Create name string for the saved image
+            Dim code As String = "WT"
+            Dim length As Int16 = Parameter("Length")
+            Dim width As Int16 = Parameter("Depth")
+            Dim height As Int16 = Parameter("High")
 
-                    Dim oFormattedText As String = ""
-                    Dim oText As String
+            Dim saveName As String = code & "_" & length & "_" & width & "_" & height
 
-                    ''' check if the note is a QTY note
-                    If iText.Contains(searchStr) Then
-                        ''' get find string in formatted text
-                        Dim leftIndex As Integer = iFormattedText.IndexOf("(")
-                        Dim rightIndex As Integer = iFormattedText.IndexOf(")")
-
-                        Dim findTXT As String = iFormattedText.Substring(leftIndex, rightIndex - leftIndex + 1)
-
-                        ''' get the detailed QTY values
-                        Dim subStringsArr As String() = Split(iText, "=")
-                        Dim numsArr As String()
-
-                        If subStringsArr(1).Contains("X") Then
-                            numsArr = Split(subStringsArr(1), "X")
-                        Else
-                            numsArr = {"1"}
-                        End If
-
-                        Dim qtyByUnit As String = numsArr(0)
-
-                        If qtyByUnit = "1" And units = "1" Then
-                            oText = "(QTY=1)"
-                        Else
-                            oText = searchStr & qtyByUnit & "X" & units & "=" & "<StyleOverride Font='Cascadia Mono' FontSize='0.72' Bold='True' Underline='True'>" & qtyByUnit * units & "</StyleOverride>" & ")"
-
-                            ''' check if the note is a mirror part
-                            If findTXT.Contains("L") And findTXT.Contains("R") Then
-                                oText &= " L + R"
-                            End If
-                        End If
-
-                        oFormattedText = Replace(iFormattedText, findTXT, oText)
-
-                    End If
-
-                    'Logger.Info("change?: " & oText)
-                    If Not String.IsNullOrEmpty(oFormattedText) Then iNote.FormattedText = oFormattedText
-                Next
-            Next
-
-            Dim frontPage As Sheet = oSheets.Item(1)
-
-            ' delete all notes with "20 G.S.S all #"
-            For Each frontNote As DrawingNote In frontPage.DrawingNotes.GeneralNotes
-                Dim iFrontText As String = frontNote.FormattedText
-                If iFrontText.Contains("qty x ") Then
-                    frontNote.Delete()
-                End If
-            Next
-
-            ' Add a qty note to the first sheet
-            If units <> "1" Then
-                Dim insertPoint = ThisApplication.TransientGeometry.CreatePoint2d(13, 26)
-
-                Dim frontTXT As String = "qty x " & units
-                Dim frontNote As String = "<StyleOverride FontSize='1.4'>" & frontTXT & "</StyleOverride>"
-                frontPage.DrawingNotes.GeneralNotes.AddFitted(insertPoint, frontNote)
-            End If
-
-            'MsgBox("All qty are reset")
+            m_Camera.SaveAsBitmap("C:\Users\di\Desktop\Export\" & saveName & ".png", 1024, 768)
         End Sub
     End Class
 End Namespace
