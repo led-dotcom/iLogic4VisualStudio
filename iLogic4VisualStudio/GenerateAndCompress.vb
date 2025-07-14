@@ -16,6 +16,10 @@ Namespace iLogic4VisualStudio
 
         Public Overrides _
         Sub Main()
+            ' Change variable values of the parameters
+            Dim excelSheet = "J:\2025\25-0319 GEORGE P\0319+3 TABLE\Data\Parameter.xls"
+            WriteExcel(excelSheet, "Sheet1", "A2", "Hello World")
+
             Dim m_Doc As Inventor.Document = ThisDoc.Document
 
             Dim m_Camera As Inventor.Camera = ThisApplication.ActiveView.Camera
@@ -83,5 +87,16 @@ Namespace iLogic4VisualStudio
             Next
             Return Nothing
         End Function
+
+        Private Sub WriteExcel(ByVal filePath As String, ByVal sheetName As String, ByVal cellAddress As String, ByVal val As String)
+            Try
+                GoExcel.Open(filePath, sheetName)
+                GoExcel.CellValue(cellAddress) = val
+                GoExcel.Save()
+                GoExcel.Close()
+            Catch ex As Exception
+                MessageBox.Show("Error writing to Excel: " & ex.Message, "Excel Error")
+            End Try
+        End Sub
     End Class
 End Namespace
