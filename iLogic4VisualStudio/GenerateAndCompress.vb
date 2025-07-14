@@ -17,15 +17,10 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             Dim m_Doc As Inventor.Document = ThisDoc.Document
-            'If m_Doc.DocumentType <> kAssemblyDocumentObject And m_Doc.DocumentType <> kPartDocumentObject Then
-            '    MessageBox.Show("File is not a model.", "iLogic")
-            '    Return 'exit rule
-            'End If
 
             Dim m_Camera As Inventor.Camera = ThisApplication.ActiveView.Camera
             Dim m_TO As Inventor.TransientObjects = ThisApplication.TransientObjects
 
-            Dim oFileName As String = ThisDoc.FileName(False)
             'm_Camera.Perspective = True
 
             m_Camera.ViewOrientationType = Inventor.ViewOrientationTypeEnum.kIsoTopLeftViewOrientation
