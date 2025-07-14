@@ -18,7 +18,10 @@ Namespace iLogic4VisualStudio
         Sub Main()
             ' Change variable values of the parameters
             Dim excelSheet = "J:\2025\25-0319 GEORGE P\0319+3 TABLE\Data\Parameter.xls"
-            WriteExcel(excelSheet, "Sheet1", "A2", "Hello World")
+            WriteExcel(excelSheet, "Sheet1", "B4", 36)
+
+            'Renew the table immediately
+            iLogicVb.UpdateWhenDone = True
 
             Dim m_Doc As Inventor.Document = ThisDoc.Document
 
