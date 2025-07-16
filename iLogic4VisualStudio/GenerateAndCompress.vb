@@ -26,6 +26,10 @@ Namespace iLogic4VisualStudio
 
                 'Renew the table immediately
                 'iLogicVb.UpdateWhenDone = True
+
+                ' Use RuleParametersOutput function if you must perform an Update using DocumentUpdate.
+                InventorVb.CheckParameters("")
+                RuleParametersOutput()
                 InventorVb.DocumentUpdate()
 
                 Dim m_Doc As Inventor.Document = ThisDoc.Document
