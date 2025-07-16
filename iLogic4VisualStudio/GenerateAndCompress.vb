@@ -21,15 +21,9 @@ Namespace iLogic4VisualStudio
 
             For Each ilength As Integer In lengthArray
                 ' Change variable values of the parameters
-                Dim excelSheet = "J:\2025\25-0319 GEORGE P\0319+3 TABLE\Data\Parameter.xls"
-                WriteExcel(excelSheet, "Sheet1", "B4", ilength)
+                Parameter("Top:1", "d2") = ilength
 
                 'Renew the table immediately
-                'iLogicVb.UpdateWhenDone = True
-
-                ' Use RuleParametersOutput function if you must perform an Update using DocumentUpdate.
-                InventorVb.CheckParameters("")
-                RuleParametersOutput()
                 InventorVb.DocumentUpdate()
 
                 Dim m_Doc As Inventor.Document = ThisDoc.Document
@@ -52,7 +46,7 @@ Namespace iLogic4VisualStudio
 
                 ' Create name string for the saved image
                 Dim code As String = "WT"
-                Dim length As Int16 = Parameter("Length")
+                Dim length As Int16 = ilength
                 Dim width As Int16 = Parameter("Depth")
                 Dim height As Int16 = Parameter("High")
 
@@ -100,16 +94,5 @@ Namespace iLogic4VisualStudio
             Next
             Return Nothing
         End Function
-
-        Private Sub WriteExcel(ByVal filePath As String, ByVal sheetName As String, ByVal cellAddress As String, ByVal val As String)
-            Try
-                GoExcel.Open(filePath, sheetName)
-                GoExcel.CellValue(cellAddress) = val
-                GoExcel.Save()
-                GoExcel.Close()
-            Catch ex As Exception
-                MessageBox.Show("Error writing to Excel: " & ex.Message, "Excel Error")
-            End Try
-        End Sub
     End Class
 End Namespace
