@@ -16,55 +16,59 @@ Namespace iLogic4VisualStudio
 
         Public Overrides _
         Sub Main()
-            ' Create a length array of 3 integers
             Dim lengthArray As Integer() = {24, 36, 48}
+            Dim depthArray As Integer() = {24, 36}
 
             For Each ilength As Integer In lengthArray
-                ' Change variable values of the parameters
-                Parameter("Top:1", "d2") = ilength
+                For Each idepth As Integer In depthArray
+                    ' Change variable values of the parameters
+                    Parameter("Top:1", "d2") = ilength
+                    Parameter("Undershelf:1", "d1") = ilength - 4
 
-                'Renew the table immediately
-                InventorVb.DocumentUpdate()
+                    Parameter("Top:1", "d1") = idepth
+                    Parameter("Undershelf:1", "d0") = idepth - 4
 
-                Dim m_Doc As Inventor.Document = ThisDoc.Document
+                    'Renew the table immediately
+                    InventorVb.DocumentUpdate()
 
-                Dim m_Camera As Inventor.Camera = ThisApplication.ActiveView.Camera
-                Dim m_TO As Inventor.TransientObjects = ThisApplication.TransientObjects
+                    Dim m_Doc As Inventor.Document = ThisDoc.Document
 
-                'm_Camera.Perspective = True
+                    Dim m_Camera As Inventor.Camera = ThisApplication.ActiveView.Camera
+                    Dim m_TO As Inventor.TransientObjects = ThisApplication.TransientObjects
 
-                m_Camera.ViewOrientationType = Inventor.ViewOrientationTypeEnum.kIsoTopLeftViewOrientation
-                m_Camera.Fit()
-                m_Camera.ApplyWithoutTransition()
+                    'm_Camera.Perspective = True
 
-                Dim m_CV As Inventor.View = ThisApplication.ActiveView
+                    m_Camera.ViewOrientationType = Inventor.ViewOrientationTypeEnum.kIsoTopLeftViewOrientation
+                    m_Camera.Fit()
+                    m_Camera.ApplyWithoutTransition()
 
-                m_CV.DisplayMode = Inventor.DisplayModeEnum.kShadedRendering
-                ThisApplication.DisplayOptions.Show3DIndicator = False
+                    Dim m_CV As Inventor.View = ThisApplication.ActiveView
 
-                m_CV.Update()
+                    m_CV.DisplayMode = Inventor.DisplayModeEnum.kShadedRendering
+                    ThisApplication.DisplayOptions.Show3DIndicator = False
 
-                ' Create name string for the saved image
-                Dim code As String = "WT"
-                Dim length As Int16 = ilength
-                Dim width As Int16 = Parameter("Depth")
-                Dim height As Int16 = Parameter("High")
+                    m_CV.Update()
 
-                Dim saveName As String = code & "_" & length & "_" & width & "_" & height
-                Dim exportPath As String = "C:\Users\di\Desktop\Export\"
-                Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
-                Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
+                    ' Create name string for the saved image
+                    Dim code As String = "WT"
+                    Dim height As Int16 = Parameter("High")
 
-                ' First save the image as temporary PNG
-                m_Camera.SaveAsBitmap(tempImagePath, 1024, 768)
+                    Dim saveName As String = code & "_" & ilength & "_" & idepth & "_" & height
+                    Dim exportPath As String = "C:\Users\di\Desktop\Export\"
+                    Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
+                    Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
 
-                ' Compress and convert to JPEG
-                CompressAndSaveImage(tempImagePath, finalImagePath, 75) ' 75% quality
+                    ' First save the image as temporary PNG
+                    m_Camera.SaveAsBitmap(tempImagePath, 1024, 768)
 
-                ' Clean up temporary file
-                If System.IO.File.Exists(tempImagePath) Then
-                    System.IO.File.Delete(tempImagePath)
-                End If
+                    ' Compress and convert to JPEG
+                    CompressAndSaveImage(tempImagePath, finalImagePath, 75) ' 75% quality
+
+                    ' Clean up temporary file
+                    If System.IO.File.Exists(tempImagePath) Then
+                        System.IO.File.Delete(tempImagePath)
+                    End If
+                Next
             Next
         End Sub
 
