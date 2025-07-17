@@ -19,9 +19,9 @@ Namespace iLogic4VisualStudio
             ' parameters of the model
             Dim modelCode As String = "WT"
 
-            Dim lengthArray As Integer() = {24, 36, 48}
-            Dim depthArray As Integer() = {24, 36, 48}
-            Dim heightArray As Integer() = {24, 36, 48}
+            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96}
+            Dim depthArray As Integer() = {24, 30, 36}
+            Dim heightArray As Integer() = {24, 30, 36}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
