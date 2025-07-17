@@ -16,6 +16,9 @@ Namespace iLogic4VisualStudio
 
         Public Overrides _
         Sub Main()
+            ' parameters of the model
+            Dim modelCode As String = "WT"
+
             Dim lengthArray As Integer() = {24, 36, 48}
             Dim depthArray As Integer() = {24, 36, 48}
             Dim heightArray As Integer() = {24, 36, 48}
@@ -35,20 +38,18 @@ Namespace iLogic4VisualStudio
 
                         Parameter("Leg:1", "d1") = iheight - 3
 
-                        'Renew the table immediately
+                        ' Update the table immediately
                         InventorVb.DocumentUpdate()
 
-                        Dim m_Doc As Inventor.Document = ThisDoc.Document
-
+                        ' Update the Camera
                         Dim m_Camera As Inventor.Camera = ThisApplication.ActiveView.Camera
-                        Dim m_TO As Inventor.TransientObjects = ThisApplication.TransientObjects
 
                         'm_Camera.Perspective = True
-
                         m_Camera.ViewOrientationType = Inventor.ViewOrientationTypeEnum.kIsoTopLeftViewOrientation
                         m_Camera.Fit()
                         m_Camera.ApplyWithoutTransition()
 
+                        ' Update the view to apply the camera settings
                         Dim m_CV As Inventor.View = ThisApplication.ActiveView
 
                         m_CV.DisplayMode = Inventor.DisplayModeEnum.kShadedRendering
@@ -57,9 +58,7 @@ Namespace iLogic4VisualStudio
                         m_CV.Update()
 
                         ' Create name string for the saved image
-                        Dim code As String = "WT"
-
-                        Dim saveName As String = code & "_" & ilength & "_" & idepth & "_" & iheight
+                        Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight
                         Dim exportPath As String = "C:\Users\di\Desktop\Export\"
                         Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
                         Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
