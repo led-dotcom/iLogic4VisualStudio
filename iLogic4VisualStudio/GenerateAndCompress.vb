@@ -58,7 +58,15 @@ Namespace iLogic4VisualStudio
                         m_CV.Update()
 
                         ' Create name string for the saved image
-                        Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight
+                        ' Example:
+                        ' WT_24_30_36_BY_C
+                        ' WT = modelCode
+                        ' 24 = length
+                        ' 30 = depth
+                        ' 36 = height
+                        ' BY = back splash BN = back no splash
+                        ' C = casters L = legs
+                        Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_BN_L"
                         Dim exportPath As String = "C:\Users\di\Desktop\Export\"
                         Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
                         Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
