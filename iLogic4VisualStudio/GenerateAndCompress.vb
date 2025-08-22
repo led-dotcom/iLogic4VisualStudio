@@ -66,7 +66,8 @@ Namespace iLogic4VisualStudio
                         ' 36 = height
                         ' BY = back splash BN = back no splash
                         ' C = casters L = legs
-                        Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_BN_L"
+                        ' ES = extra shelf
+                        Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & "BN" & "_" & "L" & "_" & "ES" & "0"
                         Dim exportPath As String = "C:\Users\di\Desktop\Export\"
                         Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
                         Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
