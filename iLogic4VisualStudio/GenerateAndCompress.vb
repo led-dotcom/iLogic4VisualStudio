@@ -44,7 +44,9 @@ Namespace iLogic4VisualStudio
                                 Parameter("Leg:1", "d1") = iheight - 3
 
                                 ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                                If ilength > 80 Then
+                                If ilength <= 80 Then
+                                    Parameter("Table Bottom:1", "d101") = 1
+                                Else
                                     Parameter("Table Bottom:1", "d101") = 2
                                     Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
                                 End If
@@ -52,18 +54,20 @@ Namespace iLogic4VisualStudio
                                 ' Back splash
                                 If backSplash = "BY" Then
                                     ' Unsuppress the back splash
-                                    ThisApplication.ActiveDocument.ComponentDefinition.Occurrences.Item("Backsplash:1").Occurrence.IsSuppressed = False
+                                    Feature.IsActive("Top:1", "Flange9") = True
                                 Else
                                     ' Suppress the back splash
-                                    ThisApplication.ActiveDocument.ComponentDefinition.Occurrences.Item("Backsplash:1").Occurrence.IsSuppressed = True
+                                    Feature.IsActive("Top:1", "Flange9") = False
                                 End If
 
                                 ' Shelf distance from bottom
-                                If extraShelf = 1 Then
-                                    ' pattenrn feature = 1
+                                If extraShelf = 0 Then
+                                    Parameter("Table Bottom:1", "d97") = 1
+                                ElseIf extraShelf = 1 Then
+                                    Parameter("Table Bottom:1", "d97") = 2
                                     Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 2 - 4
                                 ElseIf extraShelf = 2 Then
-                                    ' pattern feature = 2
+                                    Parameter("Table Bottom:1", "d97") = 3
                                     Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 3 - 2
                                 End If
 
