@@ -19,7 +19,7 @@ Namespace iLogic4VisualStudio
             ' parameters of the model
             Dim modelCode As String = "WT"
 
-            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96}
+            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 120}
             Dim depthArray As Integer() = {24, 30, 36}
             Dim heightArray As Integer() = {24, 30, 36}
 
@@ -32,11 +32,20 @@ Namespace iLogic4VisualStudio
                         Parameter("Channel_H:2", "d21") = ilength - 8 - 2 * 0.0625 - 0.0625
                         Parameter("Channel_U:1", "d1") = ilength - 4.5
 
+                        ' When length is greater than 80, unit has 6 legs adjust the table bottom width
+                        If ilength > 80 Then
+                            Parameter("Table Bottom:1", "d101") = 2
+                            Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
+                        End If
+
                         Parameter("Top:1", "d1") = idepth
                         Parameter("Undershelf:1", "d0") = idepth - 4
                         Parameter("Channel_V:1", "d46") = idepth - 0.625
 
                         Parameter("Leg:1", "d1") = iheight - 3
+
+                        ' Shelf distance from bottom
+                        'Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 3 - 2
 
                         ' Update the table immediately
                         InventorVb.DocumentUpdate()
@@ -67,7 +76,7 @@ Namespace iLogic4VisualStudio
                         ' BY = back splash BN = back no splash
                         ' C = casters L = legs
                         ' ES = extra shelf
-                        Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & "BN" & "_" & "L" & "_" & "ES" & "0"
+                        Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & "BN" & "_" & "C" & "_" & "ES" & "0"
                         Dim exportPath As String = "C:\Users\di\Desktop\Export\"
                         Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
                         Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
