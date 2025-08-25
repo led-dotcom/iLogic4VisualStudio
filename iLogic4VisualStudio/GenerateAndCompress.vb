@@ -53,18 +53,16 @@ Namespace iLogic4VisualStudio
 
                                 ' Back splash
                                 If backSplash = "BY" Then
-                                    ' Unsuppress the back splash
                                     Feature.IsActive("Top:1", "Flange9") = True
                                 Else
-                                    ' Suppress the back splash
                                     Feature.IsActive("Top:1", "Flange9") = False
                                 End If
 
-                                ' Shelf distance from bottom
                                 If extraShelf = 0 Then
                                     Parameter("Table Bottom:1", "d97") = 1
                                 ElseIf extraShelf = 1 Then
                                     Parameter("Table Bottom:1", "d97") = 2
+                                    ' Shelf distance from bottom
                                     Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 2 - 4
                                 ElseIf extraShelf = 2 Then
                                     Parameter("Table Bottom:1", "d97") = 3
