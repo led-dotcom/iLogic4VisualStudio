@@ -19,8 +19,7 @@ Namespace iLogic4VisualStudio
             ' parameters of the model
             Dim modelCode As String = "CA"
 
-            'Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 120}
-            Dim lengthArray As Integer() = {24, 36, 48, 60, 72}
+            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 120}
             Dim depthArray As Integer() = {24, 30, 36}
             Dim heightArray As Integer() = {24, 30, 36}
 
@@ -61,13 +60,13 @@ Namespace iLogic4VisualStudio
                         Parameter("BottomShelf:1", "d1") = ilength + 0.5
                         Parameter("BottomShelf:1", "d0") = idepth
 
-                        ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                        'If ilength <= 80 Then
-                        '    Parameter("Table Bottom:1", "d101") = 1
-                        'Else
-                        '    Parameter("Table Bottom:1", "d101") = 2
-                        '    Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
-                        'End If
+                        ' When length is greater than 80, unit has 6 legs
+                        If ilength <= 80 Then
+                            Parameter("Body:1", "d389") = 1
+                        Else
+                            Parameter("Body:1", "d389") = 2
+                            Parameter("Body:1", "d387") = (ilength + 4) / 2
+                        End If
 
                         ControlUnit(modelCode, ilength, idepth, iheight)
                     Next
