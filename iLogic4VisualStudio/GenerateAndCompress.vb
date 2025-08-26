@@ -69,50 +69,7 @@ Namespace iLogic4VisualStudio
                         '    Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
                         'End If
 
-                        ' Update the table immediately
-                        InventorVb.DocumentUpdate()
-
-                        ' Update the Camera
-                        Dim m_Camera As Inventor.Camera = ThisApplication.ActiveView.Camera
-
-                        'm_Camera.Perspective = True
-                        m_Camera.ViewOrientationType = Inventor.ViewOrientationTypeEnum.kIsoTopLeftViewOrientation
-                        m_Camera.Fit()
-                        m_Camera.ApplyWithoutTransition()
-
-                        ' Update the view to apply the camera settings
-                        Dim m_CV As Inventor.View = ThisApplication.ActiveView
-
-                        m_CV.DisplayMode = Inventor.DisplayModeEnum.kShadedRendering
-                        ThisApplication.DisplayOptions.Show3DIndicator = False
-
-                        m_CV.Update()
-
-                        ' Create name string for the saved image
-                        ' Example:
-                        ' WT_24_30_36_BY_C
-                        ' WT = modelCode
-                        ' 24 = length
-                        ' 30 = depth
-                        ' 36 = height
-                        ' BY = back splash BN = back no splash
-                        ' C = casters L = legs
-                        ' ES = extra shelf
-                        Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & "BY" & "_" & "C" & "_" & "ES" & "0"
-                        Dim exportPath As String = "C:\Users\di\Desktop\Export\"
-                        Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
-                        Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
-
-                        ' First save the image as temporary PNG
-                        m_Camera.SaveAsBitmap(tempImagePath, 1024, 768)
-
-                        ' Compress and convert to JPEG
-                        CompressAndSaveImage(tempImagePath, finalImagePath, 75) ' 75% quality
-
-                        ' Clean up temporary file
-                        If System.IO.File.Exists(tempImagePath) Then
-                            System.IO.File.Delete(tempImagePath)
-                        End If
+                        ControlUnit(modelCode, ilength, idepth, iheight)
                     Next
                 Next
             Next
@@ -144,5 +101,52 @@ Namespace iLogic4VisualStudio
             Next
             Return Nothing
         End Function
+
+        Private Sub ControlUnit(modelCode As String, ilength As Integer, idepth As Integer, iheight As Integer, Optional backSplash As String = "BN", Optional extraShelf As Integer = 0)
+            ' Update the unit immediately
+            InventorVb.DocumentUpdate()
+
+            ' Update the Camera
+            Dim m_Camera As Inventor.Camera = ThisApplication.ActiveView.Camera
+
+            'm_Camera.Perspective = True
+            m_Camera.ViewOrientationType = Inventor.ViewOrientationTypeEnum.kIsoTopLeftViewOrientation
+            m_Camera.Fit()
+            m_Camera.ApplyWithoutTransition()
+
+            ' Update the view to apply the camera settings
+            Dim m_CV As Inventor.View = ThisApplication.ActiveView
+
+            m_CV.DisplayMode = Inventor.DisplayModeEnum.kShadedRendering
+            ThisApplication.DisplayOptions.Show3DIndicator = False
+
+            m_CV.Update()
+
+            ' Create name string for the saved image
+            ' Example:
+            ' WT_24_30_36_BY_C
+            ' WT = modelCode
+            ' 24 = length
+            ' 30 = depth
+            ' 36 = height
+            ' BY = back splash BN = back no splash
+            ' C = casters L = legs
+            ' ES = extra shelf
+            Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & backSplash & "_" & "C" & "_" & "ES" & extraShelf
+            Dim exportPath As String = "C:\Users\di\Desktop\Export\"
+            Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
+            Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
+
+            ' First save the image as temporary PNG
+            m_Camera.SaveAsBitmap(tempImagePath, 1024, 768)
+
+            ' Compress and convert to JPEG
+            CompressAndSaveImage(tempImagePath, finalImagePath, 75) ' 75% quality
+
+            ' Clean up temporary file
+            If System.IO.File.Exists(tempImagePath) Then
+                System.IO.File.Delete(tempImagePath)
+            End If
+        End Sub
     End Class
 End Namespace
