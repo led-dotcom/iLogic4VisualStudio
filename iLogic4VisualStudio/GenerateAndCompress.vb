@@ -17,9 +17,10 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "WT"
+            Dim modelCode As String = "CA"
 
-            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 120}
+            'Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 120}
+            Dim lengthArray As Integer() = {24, 36, 48, 60, 72}
             Dim depthArray As Integer() = {24, 30, 36}
             Dim heightArray As Integer() = {24, 30, 36}
 
@@ -28,24 +29,45 @@ Namespace iLogic4VisualStudio
                 For Each idepth As Integer In depthArray
                     For Each iheight As Integer In heightArray
                         ' Change variable values of the parameters
-                        Parameter("Top:1", "d2") = ilength
-                        Parameter("Undershelf:1", "d1") = ilength - 4
-                        Parameter("Channel_H:2", "d21") = ilength - 8 - 2 * 0.0625 - 0.0625
-                        Parameter("Channel_U:1", "d1") = ilength - 4.5
 
-                        Parameter("Top:1", "d1") = idepth
-                        Parameter("Undershelf:1", "d0") = idepth - 4
-                        Parameter("Channel_V:1", "d46") = idepth - 0.625
+                        ' Top cover
+                        Parameter("Top:1", "d1") = ilength + 0.5
+                        Parameter("Top:1", "d0") = idepth + 0.5
 
-                        Parameter("Leg:1", "d1") = iheight - 3
+                        ' Top front Channel
+                        Parameter("Channel_FT:1", "d1") = ilength + 0.5
+
+                        ' Top cover support
+                        Parameter("Channel_Top:1", "d1") = ilength - 0.25
+
+                        ' Side panel
+                        Parameter("Side_L:1", "d0") = idepth
+                        Parameter("Side_L:1", "d1") = iheight
+
+                        ' Back panel
+                        Parameter("Back:1", "d1") = ilength
+                        Parameter("Back:1", "d0") = iheight
+
+                        ' Middle shelf
+                        Parameter("MiddleShelf:1", "d1") = ilength + 0.5
+                        Parameter("MiddleShelf:1", "d0") = idepth - 1
+                        ' Middle shelf height
+                        Parameter("Body:1", "d354") = iheight / 2 - 4
+
+                        ' Middle shelf support
+                        Parameter("Channel_Middle:1", "d26") = ilength - 0.25
+
+                        ' Bottom shelf
+                        Parameter("BottomShelf:1", "d1") = ilength + 0.5
+                        Parameter("BottomShelf:1", "d0") = idepth
 
                         ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                        If ilength <= 80 Then
-                            Parameter("Table Bottom:1", "d101") = 1
-                        Else
-                            Parameter("Table Bottom:1", "d101") = 2
-                            Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
-                        End If
+                        'If ilength <= 80 Then
+                        '    Parameter("Table Bottom:1", "d101") = 1
+                        'Else
+                        '    Parameter("Table Bottom:1", "d101") = 2
+                        '    Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
+                        'End If
 
                         ' Update the table immediately
                         InventorVb.DocumentUpdate()
