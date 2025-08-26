@@ -23,84 +23,74 @@ Namespace iLogic4VisualStudio
             Dim depthArray As Integer() = {24, 30, 36}
             Dim heightArray As Integer() = {24, 30, 36}
 
-            Dim backSplashArray As String() = {"BY", "BN"}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
                     For Each iheight As Integer In heightArray
-                        For Each backSplash As String In backSplashArray
-                            ' Change variable values of the parameters
-                            Parameter("Top:1", "d2") = ilength
-                            Parameter("Undershelf:1", "d1") = ilength - 4
-                            Parameter("Channel_H:2", "d21") = ilength - 8 - 2 * 0.0625 - 0.0625
-                            Parameter("Channel_U:1", "d1") = ilength - 4.5
+                        ' Change variable values of the parameters
+                        Parameter("Top:1", "d2") = ilength
+                        Parameter("Undershelf:1", "d1") = ilength - 4
+                        Parameter("Channel_H:2", "d21") = ilength - 8 - 2 * 0.0625 - 0.0625
+                        Parameter("Channel_U:1", "d1") = ilength - 4.5
 
-                            Parameter("Top:1", "d1") = idepth
-                            Parameter("Undershelf:1", "d0") = idepth - 4
-                            Parameter("Channel_V:1", "d46") = idepth - 0.625
+                        Parameter("Top:1", "d1") = idepth
+                        Parameter("Undershelf:1", "d0") = idepth - 4
+                        Parameter("Channel_V:1", "d46") = idepth - 0.625
 
-                            Parameter("Leg:1", "d1") = iheight - 3
+                        Parameter("Leg:1", "d1") = iheight - 3
 
-                            ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                            If ilength <= 80 Then
-                                Parameter("Table Bottom:1", "d101") = 1
-                            Else
-                                Parameter("Table Bottom:1", "d101") = 2
-                                Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
-                            End If
+                        ' When length is greater than 80, unit has 6 legs adjust the table bottom width
+                        If ilength <= 80 Then
+                            Parameter("Table Bottom:1", "d101") = 1
+                        Else
+                            Parameter("Table Bottom:1", "d101") = 2
+                            Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
+                        End If
 
-                            ' Back splash
-                            If backSplash = "BY" Then
-                                Feature.IsActive("Top:1", "Flange9") = True
-                            Else
-                                Feature.IsActive("Top:1", "Flange9") = False
-                            End If
+                        ' Update the table immediately
+                        InventorVb.DocumentUpdate()
 
-                            ' Update the table immediately
-                            InventorVb.DocumentUpdate()
+                        ' Update the Camera
+                        Dim m_Camera As Inventor.Camera = ThisApplication.ActiveView.Camera
 
-                            ' Update the Camera
-                            Dim m_Camera As Inventor.Camera = ThisApplication.ActiveView.Camera
+                        'm_Camera.Perspective = True
+                        m_Camera.ViewOrientationType = Inventor.ViewOrientationTypeEnum.kIsoTopLeftViewOrientation
+                        m_Camera.Fit()
+                        m_Camera.ApplyWithoutTransition()
 
-                            'm_Camera.Perspective = True
-                            m_Camera.ViewOrientationType = Inventor.ViewOrientationTypeEnum.kIsoTopLeftViewOrientation
-                            m_Camera.Fit()
-                            m_Camera.ApplyWithoutTransition()
+                        ' Update the view to apply the camera settings
+                        Dim m_CV As Inventor.View = ThisApplication.ActiveView
 
-                            ' Update the view to apply the camera settings
-                            Dim m_CV As Inventor.View = ThisApplication.ActiveView
+                        m_CV.DisplayMode = Inventor.DisplayModeEnum.kShadedRendering
+                        ThisApplication.DisplayOptions.Show3DIndicator = False
 
-                            m_CV.DisplayMode = Inventor.DisplayModeEnum.kShadedRendering
-                            ThisApplication.DisplayOptions.Show3DIndicator = False
+                        m_CV.Update()
 
-                            m_CV.Update()
+                        ' Create name string for the saved image
+                        ' Example:
+                        ' WT_24_30_36_BY_C
+                        ' WT = modelCode
+                        ' 24 = length
+                        ' 30 = depth
+                        ' 36 = height
+                        ' BY = back splash BN = back no splash
+                        ' C = casters L = legs
+                        ' ES = extra shelf
+                        Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & "BY" & "_" & "C" & "_" & "ES" & "0"
+                        Dim exportPath As String = "C:\Users\di\Desktop\Export\"
+                        Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
+                        Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
 
-                            ' Create name string for the saved image
-                            ' Example:
-                            ' WT_24_30_36_BY_C
-                            ' WT = modelCode
-                            ' 24 = length
-                            ' 30 = depth
-                            ' 36 = height
-                            ' BY = back splash BN = back no splash
-                            ' C = casters L = legs
-                            ' ES = extra shelf
-                            Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & backSplash & "_" & "C" & "_" & "ES" & extraShelf
-                            Dim exportPath As String = "C:\Users\di\Desktop\Export\"
-                            Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
-                            Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
+                        ' First save the image as temporary PNG
+                        m_Camera.SaveAsBitmap(tempImagePath, 1024, 768)
 
-                            ' First save the image as temporary PNG
-                            m_Camera.SaveAsBitmap(tempImagePath, 1024, 768)
+                        ' Compress and convert to JPEG
+                        CompressAndSaveImage(tempImagePath, finalImagePath, 75) ' 75% quality
 
-                            ' Compress and convert to JPEG
-                            CompressAndSaveImage(tempImagePath, finalImagePath, 75) ' 75% quality
-
-                            ' Clean up temporary file
-                            If System.IO.File.Exists(tempImagePath) Then
-                                System.IO.File.Delete(tempImagePath)
-                            End If
-                        Next
+                        ' Clean up temporary file
+                        If System.IO.File.Exists(tempImagePath) Then
+                            System.IO.File.Delete(tempImagePath)
+                        End If
                     Next
                 Next
             Next
