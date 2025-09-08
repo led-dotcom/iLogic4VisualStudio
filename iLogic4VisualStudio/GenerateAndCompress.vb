@@ -19,9 +19,9 @@ Namespace iLogic4VisualStudio
             ' parameters of the model
             Dim modelCode As String = "WT"
 
-            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 120}
-            Dim depthArray As Integer() = {24, 30, 36}
-            Dim heightArray As Integer() = {24, 30, 36}
+            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
+            Dim depthArray As Integer() = {18, 24, 30, 36, 42, 48}
+            Dim heightArray As Integer() = {36}
 
             Dim backSplashArray As String() = {"BY", "BN"}
             Dim extraShelfArray As Integer() = {0, 1, 2}
@@ -49,6 +49,13 @@ Namespace iLogic4VisualStudio
                                 Else
                                     Parameter("Table Bottom:1", "d101") = 2
                                     Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
+                                End If
+
+                                ' When depth is smaller than 24, reset quantity of channel H to 1
+                                If idepth < 24 Then
+                                    Parameter("Table Top:1", "d100") = 1
+                                Else
+                                    Parameter("Table Top:1", "d100") = 2
                                 End If
 
                                 ' Back splash
