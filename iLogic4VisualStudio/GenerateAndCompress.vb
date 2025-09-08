@@ -17,11 +17,11 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "CA"
+            Dim modelCode As String = "UC"
 
-            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 120}
-            Dim depthArray As Integer() = {24, 30, 36}
-            Dim heightArray As Integer() = {24, 30, 36}
+            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
+            Dim depthArray As Integer() = {24, 30}
+            Dim heightArray As Integer() = {36}
 
             Dim backSplashArray As String() = {"BY", "BN"}
             Dim extraShelfArray As Integer() = {0, 1}
