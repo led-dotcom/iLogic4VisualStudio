@@ -19,9 +19,9 @@ Namespace iLogic4VisualStudio
             ' parameters of the model
             Dim modelCode As String = "ST"
 
-            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 120}
-            Dim depthArray As Integer() = {24, 30, 36}
-            Dim heightArray As Integer() = {24, 30, 36}
+            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96}
+            Dim depthArray As Integer() = {30}
+            Dim heightArray As Integer() = {36}
 
             Dim extraShelfArray As Integer() = {0, 1, 2}
 
@@ -148,7 +148,7 @@ Namespace iLogic4VisualStudio
             ' BY = back splash BN = back no splash
             ' C = casters L = legs
             ' ES = extra shelf
-            Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & backSplash & "_" & "C" & "_" & "ES" & extraShelf
+            Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & backSplash & "_" & "L" & "_" & "ES" & extraShelf
             Dim exportPath As String = "C:\Users\di\Desktop\Export\"
             Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
             Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
