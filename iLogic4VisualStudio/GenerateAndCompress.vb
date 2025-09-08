@@ -24,7 +24,7 @@ Namespace iLogic4VisualStudio
             Dim heightArray As Integer() = {24, 30, 36}
 
             Dim backSplashArray As String() = {"BY", "BN"}
-            Dim extraShelfArray As Integer() = {0, 1, 2}
+            Dim extraShelfArray As Integer() = {0, 1}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
@@ -81,14 +81,10 @@ Namespace iLogic4VisualStudio
 
                                 ' Shelf count
                                 If extraShelf = 0 Then
-                                    'Component.Visible({"Body:1", "Middle_Shelf:1"}) = False
-                                    Parameter("Body:1", "d354") = -2
-                                    Parameter("Body:1", "d397") = 0
-                                ElseIf extraShelf = 1 Then
                                     'Component.IsActive({"Body:1", "Middle_Shelf:1"}) = True
                                     Parameter("Body:1", "d354") = iheight / 2 - 4
                                     Parameter("Body:1", "d397") = 1
-                                ElseIf extraShelf = 2 Then
+                                ElseIf extraShelf = 1 Then
                                     'Component.IsActive({"Body:1", "Middle_Shelf:1"}) = True
                                     Parameter("Body:1", "d354") = iheight / 3 - 2
                                     Parameter("Body:1", "d395") = iheight / 3 - 2
