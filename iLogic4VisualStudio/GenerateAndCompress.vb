@@ -35,8 +35,29 @@ Namespace iLogic4VisualStudio
                         Parameter("Top:1", "d0") = idepth - 21
 
                         ' Top cover cutout
-                        Parameter("Top:1", "CutoutToRightEdge") = (ilength - 8) / 2
                         'Parameter("Top:1", "d346") = 2
+                        ' When length is greater than 72, unit has 2 cutouts
+                        If ilength <= 72 Then
+                            Parameter("Top:1", "TopCutPatternTimes") = 1
+                            Parameter("Top:1", "TopCutoutToRightEdge") = (ilength - 7) / 2
+
+                            Parameter("ControlPannel:1", "ControlPanelCutPatternTimes") = 1
+                            Parameter("ControlPannel:1", "ControlPanelCutoutToRightEdge") = (ilength - 9) / 2
+
+                            Parameter("SteamerTop:1", "SteamerBoxPatternTimes") = 1
+                        Else
+                            Parameter("Top:1", "TopCutPatternTimes") = 2
+                            Parameter("Top:1", "TopCutPatternDistance") = (ilength - 8) / 2
+                            Parameter("Top:1", "TopCutoutToRightEdge") = 21
+
+                            Parameter("ControlPannel:1", "ControlPanelCutPatternTimes") = 2
+                            Parameter("ControlPannel:1", "ControlPanelCutPatternDistance") = (ilength - 8) / 2
+                            Parameter("ControlPannel:1", "ControlPanelCutoutToRightEdge") = 20
+
+                            Parameter("SteamerTop:1", "SteamerBoxPatternTimes") = 2
+                            Parameter("SteamerTop:1", "SteamerBoxPatternDistance") = (ilength - 8) / 2
+                        End If
+
 
                         ' Top front Channel
                         Parameter("ControlPannel:1", "d0") = ilength - 4
@@ -59,7 +80,7 @@ Namespace iLogic4VisualStudio
                         ' Bottom Channel
                         Parameter("Chennel_Bottom:1", "d1") = ilength - 1
 
-                        ' When length is greater than 80, unit has 6 legs
+                        ' When length is greater than 72, unit has 6 legs
                         If ilength <= 72 Then
                             Parameter("Body:1", "LegsPatternTimes") = 1
                         Else
