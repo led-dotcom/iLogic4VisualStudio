@@ -28,64 +28,46 @@ Namespace iLogic4VisualStudio
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
                     For Each iheight As Integer In heightArray
-                        For Each extraShelf As Integer In extraShelfArray
-                            ' Change variable values of the parameters
+                        ' Change variable values of the parameters
 
-                            ' Top cover
-                            Parameter("Top:1", "d1") = ilength
-                            Parameter("Top:1", "d0") = idepth - 21
+                        ' Top cover
+                        Parameter("Top:1", "d1") = ilength
+                        Parameter("Top:1", "d0") = idepth - 21
 
-                            ' Top cover cutout
-                            Parameter("Top:1", "d363") = (ilength - 8) / 2
-                            Parameter("Top:1", "d346") = (idepth - 30) / 2
+                        ' Top cover cutout
+                        Parameter("Top:1", "d363") = (ilength - 8) / 2
+                        Parameter("Top:1", "d346") = (idepth - 30) / 2
 
-                            ' Top front Channel
-                            Parameter("ControlPannel:1", "d0") = ilength - 4
+                        ' Top front Channel
+                        Parameter("ControlPannel:1", "d0") = ilength - 4
 
-                            ' Top front Angle
-                            Parameter("Angle_FT:1", "d12") = ilength - 3 / 8
+                        ' Top front Angle
+                        Parameter("Angle_FT:1", "d12") = ilength - 3 / 8
 
-                            ' Side panel
-                            Parameter("Side_L:1", "d0") = idepth
-                            Parameter("Side_L:1", "d1") = iheight
+                        ' Side panel
+                        Parameter("Side_L:1", "d0") = idepth
+                        Parameter("Side_L:1", "d1") = iheight
 
-                            ' Back panel
-                            Parameter("Back:1", "d1") = ilength
-                            Parameter("Back:1", "d0") = iheight
+                        ' Back panel
+                        Parameter("Back:1", "d1") = ilength
+                        Parameter("Back:1", "d0") = iheight
 
-                            ' Bottom shelf
-                            Parameter("BottomShelf:1", "d1") = ilength - 1 / 8
-                            Parameter("BottomShelf:1", "d0") = idepth - 1
+                        ' Bottom shelf
+                        Parameter("BottomShelf:1", "d1") = ilength - 1 / 8
+                        Parameter("BottomShelf:1", "d0") = idepth - 1
 
-                            ' Bottom Channel
-                            Parameter("Chennel_Bottom:1", "d1") = ilength - 1
+                        ' Bottom Channel
+                        Parameter("Chennel_Bottom:1", "d1") = ilength - 1
 
-                            ' When length is greater than 80, unit has 6 legs
-                            'If ilength <= 80 Then
-                            '    Parameter("Body:1", "d393") = 1
-                            'Else
-                            '    Parameter("Body:1", "d393") = 2
-                            '    Parameter("Body:1", "d391") = (ilength + 4) / 2
-                            'End If
+                        ' When length is greater than 80, unit has 6 legs
+                        'If ilength <= 80 Then
+                        '    Parameter("Body:1", "d393") = 1
+                        'Else
+                        '    Parameter("Body:1", "d393") = 2
+                        '    Parameter("Body:1", "d391") = (ilength + 4) / 2
+                        'End If
 
-                            ' Shelf count
-                            'If extraShelf = 0 Then
-                            '    'Component.Visible({"Body:1", "Middle_Shelf:1"}) = False
-                            '    Parameter("Body:1", "d354") = -2
-                            '    Parameter("Body:1", "d397") = 0
-                            'ElseIf extraShelf = 1 Then
-                            '    'Component.IsActive({"Body:1", "Middle_Shelf:1"}) = True
-                            '    Parameter("Body:1", "d354") = iheight / 2 - 4
-                            '    Parameter("Body:1", "d397") = 1
-                            'ElseIf extraShelf = 2 Then
-                            '    'Component.IsActive({"Body:1", "Middle_Shelf:1"}) = True
-                            '    Parameter("Body:1", "d354") = iheight / 3 - 2
-                            '    Parameter("Body:1", "d395") = iheight / 3 - 2
-                            '    Parameter("Body:1", "d397") = 2
-                            'End If
-
-                            ControlUnit(modelCode, ilength, idepth, iheight, "BN", 0)
-                        Next
+                        ControlUnit(modelCode, ilength, idepth, iheight)
                     Next
                 Next
             Next
