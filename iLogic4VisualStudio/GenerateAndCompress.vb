@@ -35,8 +35,8 @@ Namespace iLogic4VisualStudio
                         Parameter("Top:1", "d0") = idepth - 21
 
                         ' Top cover cutout
-                        Parameter("Top:1", "d363") = (ilength - 8) / 2
-                        Parameter("Top:1", "d346") = (idepth - 30) / 2
+                        Parameter("Top:1", "CutoutToRightEdge") = (ilength - 8) / 2
+                        'Parameter("Top:1", "d346") = 2
 
                         ' Top front Channel
                         Parameter("ControlPannel:1", "d0") = ilength - 4
