@@ -41,11 +41,15 @@ Namespace iLogic4VisualStudio
                             Parameter("Top:1", "TopCutPatternTimes") = 1
                             Parameter("Top:1", "TopCutoutToRightEdge") = (ilength - 7) / 2
 
+                            Parameter("ControlPannel:1", "d36") = 5 + 5 / 8
+
                             Parameter("SteamerTop:1", "SteamerBoxPatternTimes") = 1
                         Else
                             Parameter("Top:1", "TopCutPatternTimes") = 2
                             Parameter("Top:1", "TopCutPatternDistance") = (ilength - 8) / 2
                             Parameter("Top:1", "TopCutoutToRightEdge") = 21
+
+                            Parameter("ControlPannel:1", "d36") = 9 + 5 / 8
 
                             Parameter("SteamerTop:1", "SteamerBoxPatternTimes") = 2
                             Parameter("SteamerTop:1", "SteamerBoxPatternDistance") = (ilength - 8) / 2
