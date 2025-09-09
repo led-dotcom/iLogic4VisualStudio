@@ -60,12 +60,12 @@ Namespace iLogic4VisualStudio
                         Parameter("Chennel_Bottom:1", "d1") = ilength - 1
 
                         ' When length is greater than 80, unit has 6 legs
-                        'If ilength <= 80 Then
-                        '    Parameter("Body:1", "d393") = 1
-                        'Else
-                        '    Parameter("Body:1", "d393") = 2
-                        '    Parameter("Body:1", "d391") = (ilength + 4) / 2
-                        'End If
+                        If ilength <= 72 Then
+                            Parameter("Body:1", "LegsPatternTimes") = 1
+                        Else
+                            Parameter("Body:1", "LegsPatternTimes") = 2
+                            Parameter("Body:1", "LegsPatternDistance") = (ilength - 4) / 2
+                        End If
 
                         ControlUnit(modelCode, ilength, idepth, iheight)
                     Next
