@@ -19,80 +19,88 @@ Namespace iLogic4VisualStudio
             ' parameters of the model
             Dim modelCode As String = "UC"
 
-            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
+            Dim lengthArray As Integer() = {84, 96, 108, 117}
             Dim depthArray As Integer() = {24, 30}
             Dim heightArray As Integer() = {36}
 
             Dim backSplashArray As String() = {"BY", "BN"}
-            Dim extraShelfArray As Integer() = {0, 1}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
                     For Each iheight As Integer In heightArray
                         For Each backSplash As String In backSplashArray
-                            For Each extraShelf As Integer In extraShelfArray
-                                ' Change variable values of the parameters
+                            ' Change variable values of the parameters
 
-                                ' Top cover
-                                Parameter("Top:1", "d1") = ilength + 0.5
-                                Parameter("Top:1", "d0") = idepth + 0.5
+                            ' Top cover
+                            Parameter("Top:1", "d1") = ilength + 0.5
+                            Parameter("Top:1", "d0") = idepth + 0.5
 
-                                ' Top front Channel
-                                Parameter("Channel_FT:1", "d1") = ilength + 0.5
+                            ' Top front Channel
+                            Parameter("Channel_FT:1", "d1") = ilength + 0.5
+                            Parameter("Body:1", "d387") = ilength / 2 - 3
 
-                                ' Top cover support
-                                Parameter("Channel_Top:1", "d1") = ilength - 0.25
+                            ' Top cover support
+                            Parameter("channel_TV - Copy:1", "d1") = ilength / 2 - 1
+                            Parameter("Channel_Top:3", "d1") = ilength / 2 - 1
+                            Parameter("channel_TV:1", "d1") = idepth - 1
 
-                                ' Side panel
-                                Parameter("Side_L:1", "d0") = idepth
-                                Parameter("Side_L:1", "d1") = iheight
+                            ' Side panel
+                            Parameter("Side_L:1", "d0") = idepth
+                            Parameter("Side_L:1", "d1") = iheight
 
-                                ' Back panel
-                                Parameter("Back:1", "d1") = ilength
-                                Parameter("Back:1", "d0") = iheight
+                            ' Back panel
+                            Parameter("Back:1", "d1") = ilength
+                            Parameter("Back:1", "d0") = iheight
 
-                                ' Middle shelf
-                                Parameter("MiddleShelf:1", "d1") = ilength + 0.5
-                                Parameter("MiddleShelf:1", "d0") = idepth - 1
-                                ' Middle shelf height
-                                Parameter("Body:1", "d354") = iheight / 2 - 4
+                            ' Middle shelf
+                            Parameter("MiddleShelf - Copy:1", "d1") = ilength / 2 - 0.5
+                            Parameter("MiddleShelf - Copy:1", "d0") = idepth - 2
+                            Parameter("MiddleShelf:1", "d1") = ilength / 2 - 0.5
+                            Parameter("MiddleShelf:1", "d0") = idepth - 2
+                            ' Middle shelf height
+                            'Parameter("Body:1", "d354") = iheight / 2 - 4
 
-                                ' Middle shelf support
-                                Parameter("Channel_Middle:1", "d26") = ilength - 0.25
+                            ' Middle shelf support
+                            Parameter("Channel_Middle - Copy:1", "d26") = ilength / 2 - 0.5
 
-                                ' Bottom shelf
-                                Parameter("BottomShelf:1", "d1") = ilength + 0.5
-                                Parameter("BottomShelf:1", "d0") = idepth
+                            ' Middle wall
+                            Parameter("MiddleWall:1", "d1") = iheight - 2
+                            Parameter("MiddleWall:1", "d0") = idepth - 0.5
+                            Parameter("Post II :1", "d1") = iheight - 2
+                            Parameter("Body:1", "d370") = ilength / 2 - 3
 
-                                ' When length is greater than 80, unit has 6 legs
-                                If ilength <= 80 Then
-                                    Parameter("Body:1", "d393") = 1
-                                Else
-                                    Parameter("Body:1", "d393") = 2
-                                    Parameter("Body:1", "d391") = (ilength + 4) / 2
-                                End If
+                            ' Bottom shelf
+                            Parameter("BottomShelf:1", "d1") = ilength + 0.5
+                            Parameter("BottomShelf:1", "d0") = idepth
 
-                                ' Back splash
-                                If backSplash = "BY" Then
-                                    Feature.IsActive("Top:1", "Flange21") = True
-                                Else
-                                    Feature.IsActive("Top:1", "Flange21") = False
-                                End If
+                            ' Bottom shelf support
+                            Parameter("Chennel_Bottom:1", "d1") = ilength - 1
 
-                                ' Shelf count
-                                If extraShelf = 0 Then
-                                    'Component.IsActive({"Body:1", "Middle_Shelf:1"}) = True
-                                    Parameter("Body:1", "d354") = iheight / 2 - 4
-                                    Parameter("Body:1", "d397") = 1
-                                ElseIf extraShelf = 1 Then
-                                    'Component.IsActive({"Body:1", "Middle_Shelf:1"}) = True
-                                    Parameter("Body:1", "d354") = iheight / 3 - 2
-                                    Parameter("Body:1", "d395") = iheight / 3 - 2
-                                    Parameter("Body:1", "d397") = 2
-                                End If
+                            ' Leg support
+                            Parameter("LegPlate_M:1", "d1") = idepth - 1
+                            Parameter("Body:1", "d422") = ilength / 2
+                            Parameter("MiddleLeg:1", "d57") = idepth - 4
 
-                                ControlUnit(modelCode, ilength, idepth, iheight, backSplash, extraShelf)
-                            Next
+                            ' Back splash
+                            If backSplash = "BY" Then
+                                Feature.IsActive("Top:1", "Flange25") = True
+                            Else
+                                Feature.IsActive("Top:1", "Flange25") = False
+                            End If
+
+                            ' Shelf count
+                            'If extraShelf = 0 Then
+                            '    'Component.IsActive({"Body:1", "Middle_Shelf:1"}) = True
+                            '    Parameter("Body:1", "d354") = iheight / 2 - 4
+                            '    Parameter("Body:1", "d397") = 1
+                            'ElseIf extraShelf = 1 Then
+                            '    'Component.IsActive({"Body:1", "Middle_Shelf:1"}) = True
+                            '    Parameter("Body:1", "d354") = iheight / 3 - 2
+                            '    Parameter("Body:1", "d395") = iheight / 3 - 2
+                            '    Parameter("Body:1", "d397") = 2
+                            'End If
+
+                            ControlUnit(modelCode, ilength, idepth, iheight, backSplash, 0)
                         Next
                     Next
                 Next
