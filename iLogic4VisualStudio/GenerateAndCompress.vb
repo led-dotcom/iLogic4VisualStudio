@@ -17,30 +17,37 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "SO"
+            Dim modelCode As String = "DO"
 
             Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
             Dim depthArray As Integer() = {12}
-            Dim heightArray As Integer() = {18}
+            Dim heightArray As Integer() = {27}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
                     For Each iheight As Integer In heightArray
                         ' Change variable values of the parameters
-                        Parameter("Top:1", "d1") = ilength
 
+                        ' Top
+                        Parameter("Top:1", "d1") = ilength
                         Parameter("Top:1", "d0") = idepth
 
-                        Parameter("Leg:1", "d2") = iheight - 3
-                        Parameter("d106") = ilength - 1.1
+                        ' Undershelf
+                        Parameter("Undershelf:1", "d1") = ilength - 0.5
+                        Parameter("Undershelf:1", "d0") = idepth - 0.5
 
-                        ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                        'If ilength <= 80 Then
-                        '    Parameter("Table Bottom:1", "d101") = 1
-                        'Else
-                        '    Parameter("Table Bottom:1", "d101") = 2
-                        '    Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
-                        'End If
+                        ' Legs
+                        Parameter("Leg:1", "d2") = iheight - 3
+                        Parameter("Leg_Back:1", "d2") = iheight - 3
+                        'Parameter("d106") = ilength - 1.1
+
+                        'When length Is greater than 80, unit has 6 legs adjust the table bottom width
+                        If ilength <= 80 Then
+                            Parameter("d118") = 1
+                        Else
+                            Parameter("d118") = 2
+                            Parameter("d116") = (ilength - 4) / 2
+                        End If
 
                         ' When depth is smaller than 24, reset quantity of channel H to 1
                         'If idepth < 24 Then
