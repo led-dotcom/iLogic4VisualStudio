@@ -17,11 +17,11 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "DO"
+            Dim modelCode As String = "TO"
 
             Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
             Dim depthArray As Integer() = {12}
-            Dim heightArray As Integer() = {27}
+            Dim heightArray As Integer() = {37.5}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
@@ -43,10 +43,10 @@ Namespace iLogic4VisualStudio
 
                         'When length Is greater than 80, unit has 6 legs adjust the table bottom width
                         If ilength <= 80 Then
-                            Parameter("d118") = 1
+                            Parameter("d146") = 1
                         Else
-                            Parameter("d118") = 2
-                            Parameter("d116") = (ilength - 4) / 2
+                            Parameter("d146") = 2
+                            Parameter("d144") = (ilength - 4) / 2
                         End If
 
                         ' When depth is smaller than 24, reset quantity of channel H to 1
