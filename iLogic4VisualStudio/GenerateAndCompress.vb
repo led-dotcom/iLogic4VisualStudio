@@ -21,7 +21,7 @@ Namespace iLogic4VisualStudio
 
             Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
             Dim depthArray As Integer() = {12}
-            Dim heightArray As Integer() = {37.5}
+            Dim heightArray As Integer() = {37}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
