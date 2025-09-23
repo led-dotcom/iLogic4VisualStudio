@@ -36,6 +36,9 @@ Namespace iLogic4VisualStudio
                         Parameter("Undershelf:1", "d1") = ilength - 0.5
                         Parameter("Undershelf:1", "d0") = idepth - 0.5
 
+                        Parameter("d134") = (iheight - 4) / 3
+                        Parameter("d147") = (iheight - 4) / 3
+
                         ' Legs
                         Parameter("Leg:1", "d2") = iheight - 3
                         Parameter("Leg_Back:1", "d2") = iheight - 3
@@ -46,7 +49,7 @@ Namespace iLogic4VisualStudio
                             Parameter("d146") = 1
                         Else
                             Parameter("d146") = 2
-                            Parameter("d144") = (ilength - 4) / 2
+                            Parameter("d144") = (4- ilength) / 2
                         End If
 
                         ' When depth is smaller than 24, reset quantity of channel H to 1
