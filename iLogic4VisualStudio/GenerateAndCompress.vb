@@ -32,15 +32,14 @@ Namespace iLogic4VisualStudio
                         Parameter("Top:1", "d0") = idepth
 
                         Parameter("Leg:1", "d2") = iheight - 3
-                        Parameter("d106") = ilength - 1.1
 
                         ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                        'If ilength <= 80 Then
-                        '    Parameter("Table Bottom:1", "d101") = 1
-                        'Else
-                        '    Parameter("Table Bottom:1", "d101") = 2
-                        '    Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
-                        'End If
+                        If ilength <= 80 Then
+                            Parameter("d149") = 1
+                        Else
+                            Parameter("d149") = 2
+                            Parameter("d147") = (ilength - 4) / 2
+                        End If
 
                         ' When depth is smaller than 24, reset quantity of channel H to 1
                         'If idepth < 24 Then
