@@ -17,35 +17,41 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "SO"
+            Dim modelCode As String = "CS"
 
-            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
-            Dim depthArray As Integer() = {12}
+            Dim lengthArray As Integer() = {48, 60, 72, 84, 96, 108, 117}
+            Dim depthArray As Integer() = {24}
             Dim heightArray As Integer() = {18}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
                     For Each iheight As Integer In heightArray
                         ' Change variable values of the parameters
-                        Parameter("Top:1", "d1") = ilength
 
-                        Parameter("Top:1", "d0") = idepth
-
-                        Parameter("Leg:1", "d2") = iheight - 3
+                        ' Top panel
+                        Parameter("Top_SG:1", "d1") = ilength
+                        ' cruved glass
+                        Parameter("CurveGlass:1", "d5") = ilength - 0.125
+                        ' Plexi glass
+                        Parameter("Plexi glass:1", "d0") = (ilength - 0.125) / 2
+                        ' glass plates
+                        Parameter("TopBracket:1", "d1") = ilength - 1.5
+                        Parameter("TopBracket - Copy:1", "d1") = ilength - 1.5
+                        Parameter("LIGHTS C:1", "d0") = ilength - 1
+                        Parameter("BASE LIGHTS:1", "d0") = ilength - 2
+                        Parameter("Front glass mount plate:1", "d2") = ilength - 0.125
+                        Parameter("channelbottom U:1", "d11") = ilength - 1.5
+                        Parameter("channelbottom U II:1", "d11") = ilength - 1.5
+                        Parameter("channelbottom UP:1", "d11") = ilength - 1.5
+                        Parameter("channelbottom UP II:1", "d11") = ilength - 0.5
+                        Parameter("channelfronglass:1", "d7") = ilength - 0.125
 
                         ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                        If ilength <= 80 Then
-                            Parameter("d149") = 1
-                        Else
-                            Parameter("d149") = 2
-                            Parameter("d147") = (ilength - 4) / 2
-                        End If
-
-                        ' When depth is smaller than 24, reset quantity of channel H to 1
-                        'If idepth < 24 Then
-                        '    Parameter("Table Top:1", "d100") = 1
+                        'If ilength <= 80 Then
+                        '    Parameter("d149") = 1
                         'Else
-                        '    Parameter("Table Top:1", "d100") = 2
+                        '    Parameter("d149") = 2
+                        '    Parameter("d147") = (ilength - 4) / 2
                         'End If
 
                         ControlUnit(modelCode, ilength, idepth, iheight)
