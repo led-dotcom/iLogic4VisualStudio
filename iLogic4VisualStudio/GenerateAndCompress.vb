@@ -17,10 +17,10 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "CS"
+            Dim modelCode As String = "FS"
 
-            Dim lengthArray As Integer() = {48, 60, 72, 84, 96, 108, 117}
-            Dim depthArray As Integer() = {24}
+            Dim lengthArray As Integer() = {36, 48, 60, 72, 84, 96, 108, 117}
+            Dim depthArray As Integer() = {20}
             Dim heightArray As Integer() = {18}
 
             For Each ilength As Integer In lengthArray
@@ -29,22 +29,11 @@ Namespace iLogic4VisualStudio
                         ' Change variable values of the parameters
 
                         ' Top panel
-                        Parameter("Top_SG:1", "d1") = ilength
+                        Parameter("Top:1", "d1") = ilength
                         ' cruved glass
-                        Parameter("CurveGlass:1", "d5") = ilength - 0.125
+                        'Parameter("CurveGlass:1", "d5") = ilength - 0.125
                         ' Plexi glass
-                        Parameter("Plexi glass:1", "d0") = (ilength - 0.125) / 2
-                        ' glass plates
-                        Parameter("TopBracket:1", "d1") = ilength - 1.5
-                        Parameter("TopBracket - Copy:1", "d1") = ilength - 1.5
-                        Parameter("LIGHTS C:1", "d0") = ilength - 1
-                        Parameter("BASE LIGHTS:1", "d0") = ilength - 2
-                        Parameter("Front glass mount plate:1", "d2") = ilength - 0.125
-                        Parameter("channelbottom U:1", "d11") = ilength - 1.5
-                        Parameter("channelbottom U II:1", "d11") = ilength - 1.5
-                        Parameter("channelbottom UP:1", "d11") = ilength - 1.5
-                        Parameter("channelbottom UP II:1", "d11") = ilength - 0.5
-                        Parameter("channelfronglass:1", "d7") = ilength - 0.125
+                        Parameter("GLASS:1", "d1") = (ilength - 0.125) / 2
 
                         ' When length is greater than 80, unit has 6 legs adjust the table bottom width
                         'If ilength <= 80 Then
