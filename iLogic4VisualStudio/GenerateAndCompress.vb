@@ -17,40 +17,47 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "DP"
+            Dim modelCode As String = "FP"
 
             Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
             Dim depthArray As Integer() = {20}
-            Dim heightArray As Integer() = {18}
+            Dim heightArray As Integer() = {24, 36, 48}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
                     For Each iheight As Integer In heightArray
                         ' Change variable values of the parameters
 
-                        ' Top panel
-                        Parameter("TOP II:1", "d2") = ilength
-                        Parameter("TOP II:1", "d1") = idepth
+                        ' Wall
+                        Parameter("WALL:1", "d0") = ilength
+                        Parameter("WALL:1", "d6") = iheight
 
-                        ' Bottom panel
-                        Parameter("Top:1", "d2") = ilength
-                        Parameter("Top:1", "d1") = idepth
+                        ' Frame
+                        Parameter("Channel_U - Copy:1", "d1") = iheight - 0.75
+                        Parameter("Channel_U - Copy - back:1", "d1") = iheight + 3.5
+                        Parameter("Channel_U:1", "d1") = ilength - 0.625
+                        Parameter("Channel_U - Copy - back:1", "d1") = iheight + 3.5
+                        Parameter("Channel_U -back h:1", "d1") = ilength - 0.375
 
-                        ' Rail panels
-                        Parameter("rail - Copy:1", "d24") = ilength - 4
-                        Parameter("rail - FIX:1", "d24") = ilength - 4
+                        ' Shelves size
+                        Parameter("Top:1", "d2") = ilength - 0.675
 
-                        ' Quantity of panels
-                        Parameter("TOP II SA:1", "d13") = ilength \ 12 - 1
-                        Parameter("Table Top:1", "d107") = ilength \ 12 - 1
-
-                        ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                        If ilength <= 80 Then
-                            Parameter("d136") = 1
+                        ' Shelves quantity and position
+                        If iheight <= 24 Then
+                            Parameter("d101") = 1
+                            Parameter("d49") = iheight / 2
+                        ElseIf iheight <= 36 Then
+                            Parameter("d101") = 2
+                            Parameter("d49") = 0
+                            Parameter("d99") = iheight / 2
                         Else
-                            Parameter("d136") = 2
-                            Parameter("d134") = (ilength - 4) / 2
+                            Parameter("d101") = 3
+                            Parameter("d49") = 0
+                            Parameter("d99") = iheight / 3
                         End If
+
+                        ' Quantity of shelf panels
+                        Parameter("Table Top:1", "d119") = ilength \ 12 - 1
 
                         ControlUnit(modelCode, ilength, idepth, iheight)
                     Next
