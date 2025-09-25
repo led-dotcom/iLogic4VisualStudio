@@ -17,9 +17,9 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "FS"
+            Dim modelCode As String = "DP"
 
-            Dim lengthArray As Integer() = {36, 48, 60, 72, 84, 96, 108, 117}
+            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
             Dim depthArray As Integer() = {20}
             Dim heightArray As Integer() = {18}
 
@@ -29,19 +29,28 @@ Namespace iLogic4VisualStudio
                         ' Change variable values of the parameters
 
                         ' Top panel
-                        Parameter("Top:1", "d1") = ilength
-                        ' cruved glass
-                        'Parameter("CurveGlass:1", "d5") = ilength - 0.125
-                        ' Plexi glass
-                        Parameter("GLASS:1", "d1") = (ilength - 0.125) / 2
+                        Parameter("TOP II:1", "d2") = ilength
+                        Parameter("TOP II:1", "d1") = idepth
+
+                        ' Bottom panel
+                        Parameter("Top:1", "d2") = ilength
+                        Parameter("Top:1", "d1") = idepth
+
+                        ' Rail panels
+                        Parameter("rail - Copy:1", "d24") = ilength - 4
+                        Parameter("rail - FIX:1", "d24") = ilength - 4
+
+                        ' Quantity of panels
+                        Parameter("TOP II SA:1", "d13") = ilength \ 12 - 1
+                        Parameter("Table Top:1", "d107") = ilength \ 12 - 1
 
                         ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                        'If ilength <= 80 Then
-                        '    Parameter("d149") = 1
-                        'Else
-                        '    Parameter("d149") = 2
-                        '    Parameter("d147") = (ilength - 4) / 2
-                        'End If
+                        If ilength <= 80 Then
+                            Parameter("d136") = 1
+                        Else
+                            Parameter("d136") = 2
+                            Parameter("d134") = (ilength - 4) / 2
+                        End If
 
                         ControlUnit(modelCode, ilength, idepth, iheight)
                     Next
