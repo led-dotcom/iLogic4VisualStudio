@@ -20,7 +20,7 @@ Namespace iLogic4VisualStudio
             Dim modelCode As String = "TO"
 
             Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
-            Dim depthArray As Integer() = {12}
+            Dim depthArray As Integer() = {12, 18}
             Dim heightArray As Integer() = {37}
 
             For Each ilength As Integer In lengthArray
@@ -49,7 +49,7 @@ Namespace iLogic4VisualStudio
                             Parameter("d146") = 1
                         Else
                             Parameter("d146") = 2
-                            Parameter("d144") = (4- ilength) / 2
+                            Parameter("d144") = (4 - ilength) / 2
                         End If
 
                         ' When depth is smaller than 24, reset quantity of channel H to 1
