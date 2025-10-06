@@ -24,7 +24,7 @@ Namespace iLogic4VisualStudio
             Dim heightArray As Integer() = {36}
 
             Dim backSplashArray As String() = {"BY", "BN"}
-            Dim extraShelfArray As Integer() = {0, 1}
+            Dim extraShelfArray As Integer() = {0}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
@@ -156,7 +156,7 @@ Namespace iLogic4VisualStudio
             ' BY = back splash BN = back no splash
             ' C = casters L = legs
             ' ES = extra shelf
-            Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & backSplash & "_" & "C"
+            Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & backSplash & "_" & "L"
             Dim exportPath As String = "C:\Users\di\Desktop\Export\"
             Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
             Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
