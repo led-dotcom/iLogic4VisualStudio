@@ -142,7 +142,6 @@
     <None Include="default\get-Last-N-Projects.iLogicVb" />
     <None Include="default\set-To-304.iLogicVb" />
     <None Include="default\set-To-430.iLogicVb" />
-    <None Include="VS\DebuggerRule.iLogicVb" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -152,6 +151,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="VS\DebuggerRule.iLogicVb" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Autodesk.iLogic.Interfaces" />
