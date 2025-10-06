@@ -20,7 +20,7 @@ Namespace iLogic4VisualStudio
             Dim modelCode As String = "DO"
 
             Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
-            Dim depthArray As Integer() = {12}
+            Dim depthArray As Integer() = {12, 18}
             Dim heightArray As Integer() = {27}
 
             For Each ilength As Integer In lengthArray
@@ -119,7 +119,7 @@ Namespace iLogic4VisualStudio
             ' BY = back splash BN = back no splash
             ' C = casters L = legs
             ' ES = extra shelf
-            Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & backSplash & "_" & "L" & "_" & "ES" & extraShelf
+            Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight
             Dim exportPath As String = "C:\Users\di\Desktop\Export\"
             Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
             Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
