@@ -19,7 +19,7 @@ Namespace iLogic4VisualStudio
             ' parameters of the model
             Dim modelCode As String = "ES"
 
-            Dim lengthArray As Integer() = {18, 24, 30, 36, 42, 48, 54, 60}
+            Dim lengthArray As Integer() = {18, 24, 30, 36, 42, 48, 54, 60, 72}
             Dim depthArray As Integer() = {30}
             Dim heightArray As Integer() = {24}
 
