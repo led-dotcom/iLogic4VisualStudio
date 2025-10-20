@@ -97,10 +97,10 @@ Namespace iLogic4VisualStudio
 			End If
 			'get file name, without path, but with the file extension
 			Dim sFileName As String = System.IO.Path.GetFileName(sFFN)
-			Dim sOldPrefix As String = "0980_"
-			Dim sNewPrefix As String = "0970_"
-			If Not sFileName.StartsWith(sOldPrefix) Then Return
-			Dim sNewFileName As String = sFileName.Replace(sOldPrefix, sNewPrefix)
+			' Dim sOldPrefix As String = "0980_"
+			' Dim sNewPrefix As String = "0970_"
+			' If Not sFileName.StartsWith(sOldPrefix) Then Return
+			Dim sNewFileName As String = System.IO.Path.GetFileNameWithoutExtension(sFileName) & "_250101.1" & System.IO.Path.GetExtension(sFileName)
 			Dim sNewFFN As String = sFFN.Replace(sFileName, sNewFileName)
 			If System.IO.File.Exists(sNewFFN) Then
 				'let user know about it
