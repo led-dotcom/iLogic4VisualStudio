@@ -12,7 +12,7 @@ Sub Main()
     Dim dllFileName = "iLogic4VisualStudio.dll"
 
     'Name of the class with rule to debug
-    Dim ruleName = "GenerateAndCompress"
+    Dim ruleName = "MyTestRule"
 
     Dim testedRule As Object = GetTestedRule(buildDir, dllFileName, ruleName)
     If testedRule Is Nothing Then Return
