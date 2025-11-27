@@ -17,68 +17,33 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "WT"
+            Dim modelCode As String = "DT"
 
-            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
+            Dim lengthArray As Integer() = {24, 36, 48, 60, 72}
             Dim depthArray As Integer() = {18, 24, 30, 36, 42, 48}
-            Dim heightArray As Integer() = {36}
-
-            Dim backSplashArray As String() = {"BY", "BN"}
-            Dim extraShelfArray As Integer() = {0, 1, 2}
+            Dim heightArray As Integer() = {36, 42}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
                     For Each iheight As Integer In heightArray
-                        For Each backSplash As String In backSplashArray
-                            For Each extraShelf As Integer In extraShelfArray
-                                ' Change variable values of the parameters
-                                Parameter("Top:1", "d2") = ilength
-                                Parameter("Undershelf:1", "d1") = ilength - 4
-                                Parameter("Channel_H:2", "d21") = ilength - 8 - 2 * 0.0625 - 0.0625
-                                Parameter("Channel_U:1", "d1") = ilength - 4.5
+                        ' Change variable values of the parameters
+                        Parameter("Right side R:1", "d267") = ilength
+                        Parameter("horiz_bracing - Copy:1", "d2") = ilength - 14
+                        Parameter("Channel H:1", "d2") = ilength - 20.5
+                        'Parameter("Channel_U:1", "d1") = ilength - 4.5
 
-                                Parameter("Top:1", "d1") = idepth
-                                Parameter("Undershelf:1", "d0") = idepth - 4
-                                Parameter("Channel_V:1", "d46") = idepth - 0.625
+                        ' Set distance between channels based on length
+                        Parameter("d210") = ilength - 14
+                        ' Set distance between legs based on length
+                        Parameter("d206") = ilength - 14
 
-                                Parameter("Leg:1", "d1") = iheight - 3
+                        'Parameter("Top:1", "d1") = idepth
+                        'Parameter("Undershelf:1", "d0") = idepth - 4
+                        'Parameter("Channel_V:1", "d46") = idepth - 0.625
 
-                                ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                                If ilength <= 80 Then
-                                    Parameter("Table Bottom:1", "d101") = 1
-                                Else
-                                    Parameter("Table Bottom:1", "d101") = 2
-                                    Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
-                                End If
+                        'Parameter("Leg:1", "d1") = iheight - 3
 
-                                ' When depth is smaller than 24, reset quantity of channel H to 1
-                                If idepth < 24 Then
-                                    Parameter("Table Top:1", "d100") = 1
-                                Else
-                                    Parameter("Table Top:1", "d100") = 2
-                                End If
-
-                                ' Back splash
-                                If backSplash = "BY" Then
-                                    Feature.IsActive("Top:1", "Flange9") = True
-                                Else
-                                    Feature.IsActive("Top:1", "Flange9") = False
-                                End If
-
-                                If extraShelf = 0 Then
-                                    Parameter("Table Bottom:1", "d97") = 1
-                                ElseIf extraShelf = 1 Then
-                                    Parameter("Table Bottom:1", "d97") = 2
-                                    ' Shelf distance from bottom
-                                    Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 2 - 4
-                                ElseIf extraShelf = 2 Then
-                                    Parameter("Table Bottom:1", "d97") = 3
-                                    Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 3 - 2
-                                End If
-
-                                ControlUnit(modelCode, ilength, idepth, iheight, backSplash, extraShelf)
-                            Next
-                        Next
+                        ControlUnit(modelCode, ilength, idepth, iheight)
                     Next
                 Next
             Next
@@ -141,7 +106,7 @@ Namespace iLogic4VisualStudio
             ' BY = back splash BN = back no splash
             ' C = casters L = legs
             ' ES = extra shelf
-            Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & backSplash & "_" & "L" & "_" & "ES" & extraShelf
+            Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight
             Dim exportPath As String = "C:\Users\di\Desktop\Export\"
             Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
             Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
