@@ -19,8 +19,8 @@ Namespace iLogic4VisualStudio
             ' parameters of the model
             Dim modelCode As String = "DT"
 
-            Dim lengthArray As Integer() = {24, 36, 48, 60, 72}
-            Dim depthArray As Integer() = {18, 24, 30, 36, 42, 48}
+            Dim lengthArray As Integer() = {60}
+            Dim depthArray As Integer() = {42}
             Dim heightArray As Integer() = {36, 42}
 
             For Each ilength As Integer In lengthArray
@@ -28,18 +28,17 @@ Namespace iLogic4VisualStudio
                     For Each iheight As Integer In heightArray
                         ' Change variable values of the parameters
                         Parameter("Right side R:1", "d267") = ilength
-                        Parameter("horiz_bracing - Copy:1", "d2") = ilength - 14
-                        Parameter("Channel H:1", "d2") = ilength - 20.5
-                        'Parameter("Channel_U:1", "d1") = ilength - 4.5
-
+                        Parameter("horiz_bracing - Copy:1", "d2") = ilength - 18
+                        Parameter("Channel H:1", "d2") = ilength - 24.5
                         ' Set distance between channels based on length
-                        Parameter("d210") = ilength - 14
+                        Parameter("d210") = ilength - 18
                         ' Set distance between legs based on length
-                        Parameter("d206") = ilength - 14
+                        Parameter("d206") = ilength - 18
 
-                        'Parameter("Top:1", "d1") = idepth
+                        Parameter("Right side R:1", "d390") = idepth
+                        Parameter("Channel_H:2", "d21") = idepth - 4
+                        'Parameter("horiz_bracing:1", "d2") = idepth - 4
                         'Parameter("Undershelf:1", "d0") = idepth - 4
-                        'Parameter("Channel_V:1", "d46") = idepth - 0.625
 
                         'Parameter("Leg:1", "d1") = iheight - 3
 
