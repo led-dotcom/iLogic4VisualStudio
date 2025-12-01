@@ -20,8 +20,8 @@ Namespace iLogic4VisualStudio
             Dim modelCode As String = "ES"
 
             Dim lengthArray As Integer() = {18, 24, 30, 36, 42, 48, 54, 60, 72}
-            Dim depthArray As Integer() = {30}
-            Dim heightArray As Integer() = {24}
+            Dim depthArray As Integer() = {24, 30}
+            Dim heightArray As Integer() = {18, 24}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
