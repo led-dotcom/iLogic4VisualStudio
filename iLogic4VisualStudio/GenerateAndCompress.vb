@@ -21,7 +21,7 @@ Namespace iLogic4VisualStudio
 
             Dim lengthArray As Integer() = {12, 24, 36, 48, 60, 72, 84, 96, 108, 117}
             Dim depthArray As Integer() = {12, 18}
-            Dim heightArray As Integer() = {12, 18, 24}
+            Dim heightArray As Integer() = {12, 18}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
@@ -41,7 +41,7 @@ Namespace iLogic4VisualStudio
                             Parameter("Top SA:1", "d56") = 1
                         Else
                             Parameter("Top SA:1", "d56") = 2
-                            Parameter("Top SA:1", "d54") = (ilength - 4) / 2
+                            Parameter("Top SA:1", "d54") = ilength / 2
                         End If
 
                         ControlUnit(modelCode, ilength, idepth, iheight)
