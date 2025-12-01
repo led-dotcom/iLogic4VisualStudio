@@ -34,6 +34,7 @@ Namespace iLogic4VisualStudio
 
                         ' Top channel
                         Parameter("Channel_H:1", "d24") = ilength - 6
+                        Parameter("Channel_V:1", "d58") = idepth - 0.5
 
                         ' Top sides
                         Parameter("CoverTopSide:1", "d1") = idepth - 0.05
