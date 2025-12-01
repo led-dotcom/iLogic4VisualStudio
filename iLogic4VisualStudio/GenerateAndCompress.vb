@@ -17,11 +17,11 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "DP"
+            Dim modelCode As String = "WS"
 
-            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
-            Dim depthArray As Integer() = {20}
-            Dim heightArray As Integer() = {18}
+            Dim lengthArray As Integer() = {12, 24, 36, 48, 60, 72, 84, 96, 108, 117}
+            Dim depthArray As Integer() = {12, 18}
+            Dim heightArray As Integer() = {12, 18, 24}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
@@ -29,27 +29,19 @@ Namespace iLogic4VisualStudio
                         ' Change variable values of the parameters
 
                         ' Top panel
-                        Parameter("TOP II:1", "d2") = ilength
-                        Parameter("TOP II:1", "d1") = idepth
+                        Parameter("TOP:1", "d1") = ilength
+                        Parameter("TOP:1", "d67") = idepth
 
-                        ' Bottom panel
-                        Parameter("Top:1", "d2") = ilength
-                        Parameter("Top:1", "d1") = idepth
+                        ' Left panel
+                        Parameter("WALL BRACKET (2):2", "d0") = idepth
+                        Parameter("WALL BRACKET (2):2", "d38") = iheight
 
-                        ' Rail panels
-                        Parameter("rail - Copy:1", "d24") = ilength - 4
-                        Parameter("rail - FIX:1", "d24") = ilength - 4
-
-                        ' Quantity of panels
-                        Parameter("TOP II SA:1", "d13") = ilength \ 12 - 1
-                        Parameter("Table Top:1", "d107") = ilength \ 12 - 1
-
-                        ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                        If ilength <= 80 Then
-                            Parameter("d136") = 1
+                        ' When length is greater than 72 inches, add an extra panel
+                        If ilength <= 71 Then
+                            Parameter("Top SA:1", "d56") = 1
                         Else
-                            Parameter("d136") = 2
-                            Parameter("d134") = (ilength - 4) / 2
+                            Parameter("Top SA:1", "d56") = 2
+                            Parameter("Top SA:1", "d54") = (ilength - 4) / 2
                         End If
 
                         ControlUnit(modelCode, ilength, idepth, iheight)
