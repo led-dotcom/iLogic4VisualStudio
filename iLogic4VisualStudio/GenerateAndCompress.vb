@@ -17,11 +17,11 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "WA"
+            Dim modelCode As String = "MP"
 
-            Dim lengthArray As Integer() = {12, 24, 36, 48, 60, 72, 84, 96, 108, 117}
-            Dim depthArray As Integer() = {6, 12, 18}
-            Dim heightArray As Integer() = {6, 12}
+            Dim lengthArray As Integer() = {12, 18, 24}
+            Dim depthArray As Integer() = {18, 24}
+            Dim heightArray As Integer() = {2}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
@@ -29,20 +29,20 @@ Namespace iLogic4VisualStudio
                         ' Change variable values of the parameters
 
                         ' Top panel
-                        Parameter("TOP:1", "d1") = ilength
-                        Parameter("TOP:1", "d0") = idepth
+                        Parameter("PLATE:1", "d1") = ilength
+                        Parameter("PLATE:1", "d0") = idepth
 
                         ' Left panel
-                        Parameter("WALL BRACKET:1", "d0") = idepth
-                        Parameter("WALL BRACKET:1", "d38") = iheight
+                        'Parameter("WALL BRACKET:1", "d0") = idepth
+                        'Parameter("WALL BRACKET:1", "d38") = iheight
 
                         ' When length is greater than 72 inches, add an extra panel
-                        If ilength <= 71 Then
-                            Parameter("d17") = 1.2 = 1
-                        Else
-                            Parameter("d17") = 2
-                            Parameter("d15") = ilength / 2
-                        End If
+                        'If ilength <= 71 Then
+                        '    Parameter("d17") = 1.2 = 1
+                        'Else
+                        '    Parameter("d17") = 2
+                        '    Parameter("d15") = ilength / 2
+                        'End If
 
                         ControlUnit(modelCode, ilength, idepth, iheight)
                     Next
