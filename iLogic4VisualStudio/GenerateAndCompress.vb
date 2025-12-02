@@ -17,11 +17,11 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "MP"
+            Dim modelCode As String = "SR"
 
-            Dim lengthArray As Integer() = {12, 18, 24}
-            Dim depthArray As Integer() = {18, 24}
-            Dim heightArray As Integer() = {1}
+            Dim lengthArray As Integer() = {12, 24, 36, 48, 60, 72, 84}
+            Dim depthArray As Integer() = {5}
+            Dim heightArray As Integer() = {5}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
@@ -29,8 +29,9 @@ Namespace iLogic4VisualStudio
                         ' Change variable values of the parameters
 
                         ' Top panel
-                        Parameter("PLATE:1", "d1") = ilength
-                        Parameter("PLATE:1", "d0") = idepth
+                        Parameter(MakePath("rack:1", "Rack body:1"), "d0") = ilength
+                        ' Tube rack
+                        Parameter(MakePath("rack:1", "rack tube:1"), "d2") = ilength
 
                         ' Left panel
                         'Parameter("WALL BRACKET:1", "d0") = idepth
@@ -85,7 +86,7 @@ Namespace iLogic4VisualStudio
             Dim m_Camera As Inventor.Camera = ThisApplication.ActiveView.Camera
 
             'm_Camera.Perspective = True
-            m_Camera.ViewOrientationType = Inventor.ViewOrientationTypeEnum.kIsoTopRightViewOrientation
+            m_Camera.ViewOrientationType = Inventor.ViewOrientationTypeEnum.kIsoTopLeftViewOrientation
             m_Camera.Fit()
             m_Camera.ApplyWithoutTransition()
 
