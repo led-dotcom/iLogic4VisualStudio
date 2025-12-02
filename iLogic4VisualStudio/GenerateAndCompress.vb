@@ -87,7 +87,7 @@ Namespace iLogic4VisualStudio
             Dim m_Camera As Inventor.Camera = ThisApplication.ActiveView.Camera
 
             'm_Camera.Perspective = True
-            m_Camera.ViewOrientationType = Inventor.ViewOrientationTypeEnum.kIsoTopLeftViewOrientation
+            m_Camera.ViewOrientationType = Inventor.ViewOrientationTypeEnum.kIsoTopRightViewOrientation
             m_Camera.Fit()
             m_Camera.ApplyWithoutTransition()
 
