@@ -17,21 +17,22 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "SR"
+            Dim modelCode As String = "TR"
 
-            Dim lengthArray As Integer() = {12, 24, 36, 48, 60, 72, 84}
-            Dim depthArray As Integer() = {5}
-            Dim heightArray As Integer() = {5}
+            Dim lengthArray As Integer() = {36, 48, 60, 72, 84}
+            Dim depthArray As Integer() = {12}
+            Dim heightArray As Integer() = {6}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
                     For Each iheight As Integer In heightArray
                         ' Change variable values of the parameters
 
-                        ' Top panel
-                        Parameter(MakePath("rack:1", "Rack body:1"), "d0") = ilength
                         ' Tube rack
-                        Parameter(MakePath("rack:1", "rack tube:1"), "d2") = ilength
+                        Parameter("TUBE:1", "d1") = ilength
+
+                        ' Tube distance
+                        Parameter("d11") = ilength - 8
 
                         ' Left panel
                         'Parameter("WALL BRACKET:1", "d0") = idepth
