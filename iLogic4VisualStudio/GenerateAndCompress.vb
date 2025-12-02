@@ -17,11 +17,11 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "WS"
+            Dim modelCode As String = "WA"
 
             Dim lengthArray As Integer() = {12, 24, 36, 48, 60, 72, 84, 96, 108, 117}
-            Dim depthArray As Integer() = {12, 18}
-            Dim heightArray As Integer() = {12, 18}
+            Dim depthArray As Integer() = {6, 12, 18}
+            Dim heightArray As Integer() = {6, 12}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
@@ -30,18 +30,18 @@ Namespace iLogic4VisualStudio
 
                         ' Top panel
                         Parameter("TOP:1", "d1") = ilength
-                        Parameter("TOP:1", "d67") = idepth
+                        Parameter("TOP:1", "d0") = idepth
 
                         ' Left panel
-                        Parameter("WALL BRACKET (2):2", "d0") = idepth
-                        Parameter("WALL BRACKET (2):2", "d38") = iheight
+                        Parameter("WALL BRACKET:1", "d0") = idepth
+                        Parameter("WALL BRACKET:1", "d38") = iheight
 
                         ' When length is greater than 72 inches, add an extra panel
                         If ilength <= 71 Then
-                            Parameter("Top SA:1", "d56") = 1
+                            Parameter("d17") = 1.2 = 1
                         Else
-                            Parameter("Top SA:1", "d56") = 2
-                            Parameter("Top SA:1", "d54") = ilength / 2
+                            Parameter("d17") = 2
+                            Parameter("d15") = ilength / 2
                         End If
 
                         ControlUnit(modelCode, ilength, idepth, iheight)
