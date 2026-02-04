@@ -17,10 +17,10 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "RM"
+            Dim modelCode As String = "RC"
 
             Dim lengthArray As Integer() = {1, 12, 24, 36, 48, 60, 72, 84, 96, 108, 120}
-            Dim depthArray As Integer() = {1, 12, 24, 30, 36, 42, 48, 60}
+            Dim depthArray As Integer() = {1, 12, 24, 30, 36, 42, 48}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
