@@ -19,65 +19,62 @@ Namespace iLogic4VisualStudio
             ' parameters of the model
             Dim modelCode As String = "WT"
 
-            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
-            Dim depthArray As Integer() = {18, 24, 30, 36, 42, 48}
+            Dim lengthArray As Integer() = {18, 24, 36, 48, 60, 72}
+            Dim depthArray As Integer() = {18, 24, 30, 36}
             Dim heightArray As Integer() = {36}
 
-            Dim backSplashArray As String() = {"BY", "BN"}
-            Dim extraShelfArray As Integer() = {0, 1, 2}
+            Dim extraShelfArray As Integer() = {0, 1}
 
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
                     For Each iheight As Integer In heightArray
-                        For Each backSplash As String In backSplashArray
-                            For Each extraShelf As Integer In extraShelfArray
-                                ' Change variable values of the parameters
-                                Parameter("Top:1", "d2") = ilength
-                                Parameter("Undershelf:1", "d1") = ilength - 4
-                                Parameter("Channel_H:2", "d21") = ilength - 8 - 2 * 0.0625 - 0.0625
-                                Parameter("Channel_U:1", "d1") = ilength - 4.5
+                        For Each extraShelf As Integer In extraShelfArray
+                            ' Change variable values of the parameters
+                            Parameter(MakePath("Table Top:1", "Top:1"), "d2") = ilength
+                            Parameter(MakePath("Table Bottom:1", "Table Undershelf:1", "Undershelf:1"), "d1") = ilength - 4
+                            'Parameter("Channel_H:2", "d21") = ilength - 8 - 2 * 0.0625 - 0.0625
+                            'Parameter("Channel_U:1", "d1") = ilength - 4.5
 
-                                Parameter("Top:1", "d1") = idepth
-                                Parameter("Undershelf:1", "d0") = idepth - 4
-                                Parameter("Channel_V:1", "d46") = idepth - 0.625
+                            Parameter(MakePath("Table Top:1", "Top:1"), "d1") = idepth
+                            Parameter(MakePath("Table Bottom:1", "Table Undershelf:1", "Undershelf:1"), "d0") = idepth - 4
+                            'Parameter(MakePath("Table Top:1", "Channel_V:5"), "d46") = idepth - 0.625
 
-                                Parameter("Leg:1", "d1") = iheight - 3
+                            'Parameter("Leg:1", "d1") = iheight - 3
 
-                                ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                                If ilength <= 80 Then
-                                    Parameter("Table Bottom:1", "d101") = 1
-                                Else
-                                    Parameter("Table Bottom:1", "d101") = 2
-                                    Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
-                                End If
+                            ' When length is greater than 80, unit has 6 legs adjust the table bottom width
+                            'If ilength <= 80 Then
+                            '    Parameter("Table Bottom:1", "d101") = 1
+                            'Else
+                            '    Parameter("Table Bottom:1", "d101") = 2
+                            '    Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
+                            'End If
 
-                                ' When depth is smaller than 24, reset quantity of channel H to 1
-                                If idepth < 24 Then
-                                    Parameter("Table Top:1", "d100") = 1
-                                Else
-                                    Parameter("Table Top:1", "d100") = 2
-                                End If
+                            ' When depth is smaller than 24, reset quantity of channel H to 1
+                            'If idepth < 24 Then
+                            '    Parameter("Table Top:1", "d100") = 1
+                            'Else
+                            '    Parameter("Table Top:1", "d100") = 2
+                            'End If
 
-                                ' Back splash
-                                If backSplash = "BY" Then
-                                    Feature.IsActive("Top:1", "Flange9") = True
-                                Else
-                                    Feature.IsActive("Top:1", "Flange9") = False
-                                End If
+                            ' Back splash
+                            'If backSplash = "BY" Then
+                            '    Feature.IsActive("Top:1", "Flange9") = True
+                            'Else
+                            '    Feature.IsActive("Top:1", "Flange9") = False
+                            'End If
 
-                                If extraShelf = 0 Then
-                                    Parameter("Table Bottom:1", "d97") = 1
-                                ElseIf extraShelf = 1 Then
-                                    Parameter("Table Bottom:1", "d97") = 2
-                                    ' Shelf distance from bottom
-                                    Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 2 - 4
-                                ElseIf extraShelf = 2 Then
-                                    Parameter("Table Bottom:1", "d97") = 3
-                                    Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 3 - 2
-                                End If
+                            'If extraShelf = 0 Then
+                            '    Parameter("Table Bottom:1", "d97") = 1
+                            'ElseIf extraShelf = 1 Then
+                            '    Parameter("Table Bottom:1", "d97") = 2
+                            '    ' Shelf distance from bottom
+                            '    Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 2 - 4
+                            'ElseIf extraShelf = 2 Then
+                            '    Parameter("Table Bottom:1", "d97") = 3
+                            '    Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 3 - 2
+                            'End If
 
-                                ControlUnit(modelCode, ilength, idepth, iheight, backSplash, extraShelf)
-                            Next
+                            ControlUnit(modelCode, ilength, idepth, iheight, "BY", extraShelf)
                         Next
                     Next
                 Next
