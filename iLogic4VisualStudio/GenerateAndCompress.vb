@@ -17,10 +17,10 @@ Namespace iLogic4VisualStudio
         Public Overrides _
         Sub Main()
             ' parameters of the model
-            Dim modelCode As String = "WT"
+            Dim modelCode As String = "TS"
 
-            Dim lengthArray As Integer() = {18, 24, 36, 48, 60, 72}
-            Dim depthArray As Integer() = {18, 24, 30, 36}
+            Dim lengthArray As Integer() = {24, 36, 48, 60, 72}
+            Dim depthArray As Integer() = {24, 30, 36}
             Dim heightArray As Integer() = {36}
 
             Dim extraShelfArray As Integer() = {0, 1}
@@ -39,6 +39,13 @@ Namespace iLogic4VisualStudio
                             Parameter(MakePath("Table Bottom:1", "Table Undershelf:1", "Undershelf:1"), "d0") = idepth - 4
                             'Parameter(MakePath("Table Top:1", "Channel_V:5"), "d46") = idepth - 0.625
 
+                            ' Sink position
+                            If ilength < 48 Then
+                                Parameter(MakePath("Table Top:1", "Top:1"), "d179") = (ilength - 12) / 2
+                            Else
+                                Parameter(MakePath("Table Top:1", "Top:1"), "d179") = 10
+                            End If
+
                             'Parameter("Leg:1", "d1") = iheight - 3
 
                             ' When length is greater than 80, unit has 6 legs adjust the table bottom width
@@ -46,7 +53,7 @@ Namespace iLogic4VisualStudio
                             '    Parameter("Table Bottom:1", "d101") = 1
                             'Else
                             '    Parameter("Table Bottom:1", "d101") = 2
-                            '    Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
+                            '    Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2 
                             'End If
 
                             ' When depth is smaller than 24, reset quantity of channel H to 1
