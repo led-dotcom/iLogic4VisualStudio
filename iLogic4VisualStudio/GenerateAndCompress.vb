@@ -19,7 +19,7 @@ Namespace iLogic4VisualStudio
             ' parameters of the model
             Dim modelCode As String = "TS"
 
-            Dim lengthArray As Integer() = {24, 36, 48, 60, 72}
+            Dim lengthArray As Integer() = {24, 36, 48, 60, 72, 84, 96, 108, 117}
             Dim depthArray As Integer() = {24, 30, 36}
             Dim heightArray As Integer() = {36}
 
@@ -28,9 +28,9 @@ Namespace iLogic4VisualStudio
             For Each ilength As Integer In lengthArray
                 For Each idepth As Integer In depthArray
                     For Each iheight As Integer In heightArray
-                        For Each extraShelf As Integer In extraShelfArray
-                            ' Change variable values of the parameters
-                            Parameter(MakePath("Table Top:1", "Top:1"), "d2") = ilength
+                        'For Each extraShelf As Integer In extraShelfArray
+                        ' Change variable values of the parameters
+                        Parameter(MakePath("Table Top:1", "Top:1"), "d2") = ilength
                             Parameter(MakePath("Table Bottom:1", "Table Undershelf:1", "Undershelf:1"), "d1") = ilength - 4
                             'Parameter("Channel_H:2", "d21") = ilength - 8 - 2 * 0.0625 - 0.0625
                             'Parameter("Channel_U:1", "d1") = ilength - 4.5
@@ -49,40 +49,40 @@ Namespace iLogic4VisualStudio
                             'Parameter("Leg:1", "d1") = iheight - 3
 
                             ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                            'If ilength <= 80 Then
-                            '    Parameter("Table Bottom:1", "d101") = 1
-                            'Else
-                            '    Parameter("Table Bottom:1", "d101") = 2
-                            '    Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2 
-                            'End If
+                            If ilength <= 80 Then
+                                Parameter("Table Bottom:1", "d105") = 1
+                            Else
+                                Parameter("Table Bottom:1", "d105") = 2
+                                Parameter("Table Bottom:1", "d103") = (ilength - 4) / 2
+                            End If
 
-                            ' When depth is smaller than 24, reset quantity of channel H to 1
-                            'If idepth < 24 Then
-                            '    Parameter("Table Top:1", "d100") = 1
-                            'Else
-                            '    Parameter("Table Top:1", "d100") = 2
-                            'End If
+                        ' When depth is smaller than 24, reset quantity of channel H to 1
+                        'If idepth < 24 Then
+                        '    Parameter("Table Top:1", "d100") = 1
+                        'Else
+                        '    Parameter("Table Top:1", "d100") = 2
+                        'End If
 
-                            ' Back splash
-                            'If backSplash = "BY" Then
-                            '    Feature.IsActive("Top:1", "Flange9") = True
-                            'Else
-                            '    Feature.IsActive("Top:1", "Flange9") = False
-                            'End If
+                        ' Back splash
+                        'If backSplash = "BY" Then
+                        '    Feature.IsActive("Top:1", "Flange9") = True
+                        'Else
+                        '    Feature.IsActive("Top:1", "Flange9") = False
+                        'End If
 
-                            'If extraShelf = 0 Then
-                            '    Parameter("Table Bottom:1", "d97") = 1
-                            'ElseIf extraShelf = 1 Then
-                            '    Parameter("Table Bottom:1", "d97") = 2
-                            '    ' Shelf distance from bottom
-                            '    Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 2 - 4
-                            'ElseIf extraShelf = 2 Then
-                            '    Parameter("Table Bottom:1", "d97") = 3
-                            '    Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 3 - 2
-                            'End If
+                        'If extraShelf = 0 Then
+                        '    Parameter("Table Bottom:1", "d97") = 1
+                        'ElseIf extraShelf = 1 Then
+                        '    Parameter("Table Bottom:1", "d97") = 2
+                        '    ' Shelf distance from bottom
+                        '    Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 2 - 4
+                        'ElseIf extraShelf = 2 Then
+                        '    Parameter("Table Bottom:1", "d97") = 3
+                        '    Parameter("Table Bottom:1", "d95") = Parameter("Leg:1", "d1") / 3 - 2
+                        'End If
 
-                            ControlUnit(modelCode, ilength, idepth, iheight, "BY", extraShelf)
-                        Next
+                        ControlUnit(modelCode, ilength, idepth, iheight)
+                        'Next
                     Next
                 Next
             Next
@@ -115,7 +115,7 @@ Namespace iLogic4VisualStudio
             Return Nothing
         End Function
 
-        Private Sub ControlUnit(modelCode As String, ilength As Integer, idepth As Integer, iheight As Integer, Optional backSplash As String = "BN", Optional extraShelf As Integer = 0)
+        Private Sub ControlUnit(modelCode As String, ilength As Integer, idepth As Integer, iheight As Integer, Optional backSplash As String = "BY", Optional extraShelf As Integer = 0)
             ' Update the unit immediately
             InventorVb.DocumentUpdate()
 
@@ -145,7 +145,7 @@ Namespace iLogic4VisualStudio
             ' BY = back splash BN = back no splash
             ' C = casters L = legs
             ' ES = extra shelf
-            Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight & "_" & backSplash & "_" & "L" & "_" & "ES" & extraShelf
+            Dim saveName As String = modelCode & "_" & ilength & "_" & idepth & "_" & iheight
             Dim exportPath As String = "C:\Users\di\Desktop\Export\"
             Dim tempImagePath As String = System.IO.Path.Combine(exportPath, saveName & "_temp.png")
             Dim finalImagePath As String = System.IO.Path.Combine(exportPath, saveName & ".jpg")
