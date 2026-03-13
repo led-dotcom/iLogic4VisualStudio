@@ -34,30 +34,22 @@ Namespace iLogic4VisualStudio
                             Parameter("Top:1", "d2") = ilength
                             Parameter(MakePath("Table Bottom:1", "horiz_bracing:1"), "d2") = ilength - 4
                             Parameter("Channel_H:2", "d21") = ilength - 8 - 2 * 0.0625 - 0.0625
-                            Parameter("Table Bottom:1", "d111") = ilength - 4
-                            Parameter("Table Bottom:1", "d122") = ilength - 4
                             'Parameter("Channel_U:1", "d1") = ilength - 4.5
 
                             Parameter("Top:1", "d1") = idepth
                             Parameter(MakePath("Table Bottom:1", "horiz_bracing_2:1"), "d2") = idepth - 4
                             Parameter("Channel_V:1", "d46") = idepth - 0.625
-                            Parameter("Table Bottom:1", "d112") = idepth - 4
+                            Parameter("Table Bottom:1", "d129") = idepth - 4
 
                             Parameter("Leg:1", "d1") = iheight - 3
 
                             ' When length is greater than 80, unit has 6 legs adjust the table bottom width
-                            'If ilength <= 80 Then
-                            '    Parameter("Table Bottom:1", "d101") = 1
-                            'Else
-                            '    Parameter("Table Bottom:1", "d101") = 2
-                            '    Parameter("Table Bottom:1", "d99") = (ilength - 4) / 2
-                            'End If
-
-                            ' When depth is smaller than 24, reset quantity of channel H to 1
-                            If idepth < 24 Then
-                                Parameter("Table Top:1", "d100") = 1
+                            If ilength <= 80 Then
+                                Parameter("Table Bottom:1", "d136") = 2
+                                Parameter("Table Bottom:1", "d134") = ilength - 4
                             Else
-                                Parameter("Table Top:1", "d100") = 2
+                                Parameter("Table Bottom:1", "d136") = 3
+                                Parameter("Table Bottom:1", "d134") = (ilength - 4) / 2
                             End If
 
                             ' Back splash
