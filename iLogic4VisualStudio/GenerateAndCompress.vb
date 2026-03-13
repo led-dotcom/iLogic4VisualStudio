@@ -53,11 +53,11 @@ Namespace iLogic4VisualStudio
                             End If
 
                             ' Back splash
-                            'If backSplash = "BY" Then
-                            '    Feature.IsActive("Top:1", "Flange9") = True
-                            'Else
-                            '    Feature.IsActive("Top:1", "Flange9") = False
-                            'End If
+                            If backSplash = "BY" Then
+                                Feature.IsActive("Top:1", "Flange10") = True
+                            Else
+                                Feature.IsActive("Top:1", "Flange10") = False
+                            End If
 
                             ControlUnit(modelCode, ilength, idepth, iheight, backSplash)
                         Next
