@@ -32,11 +32,16 @@ Namespace iLogic4VisualStudio
                         For Each backSplash As String In backSplashArray
                             ' Change variable values of the parameters
                             Parameter("Top:1", "d2") = ilength
+                            Parameter(MakePath("Table Bottom:1", "horiz_bracing:1"), "d2") = ilength - 4
                             Parameter("Channel_H:2", "d21") = ilength - 8 - 2 * 0.0625 - 0.0625
+                            Parameter("Table Bottom:1", "d111") = ilength - 4
+                            Parameter("Table Bottom:1", "d122") = ilength - 4
                             'Parameter("Channel_U:1", "d1") = ilength - 4.5
 
                             Parameter("Top:1", "d1") = idepth
+                            Parameter(MakePath("Table Bottom:1", "horiz_bracing_2:1"), "d2") = idepth - 4
                             Parameter("Channel_V:1", "d46") = idepth - 0.625
+                            Parameter("Table Bottom:1", "d112") = idepth - 4
 
                             Parameter("Leg:1", "d1") = iheight - 3
 
